@@ -16,8 +16,12 @@ export default class TestService {
         return this.http.get<any>(`${this.bookUrl}${url}`)
     }
 
+    post(url: string, body: object): Observable<any> {
+        return this.http.post<any>(`${this.bookUrl}${url}`, body)
+    }
+
     searchBook(title: string): Observable<any> {
-        return this.http.get<any>(this.bookUrl+'tests/' + title).pipe(
+        return this.http.get<any>(this.bookUrl + 'tests/' + title).pipe(
             catchError(err => of(null))
         );
     }

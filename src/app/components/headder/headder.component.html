@@ -1,25 +1,17 @@
 <div>
     <div>
-
-        <div *ngIf="check; else loginInputs">
-
-            <mat-card class="avatar-menu">
-                <a mat-button routerLink="/" class="button" style="font-size: 20px;    align-self: center;">
-                    <mat-icon aria-hidden="false">home</mat-icon>
-                </a>
-
-                <input matInput placeholder={{loginWelcome}} disabled class="welcome">
-
-                <div style="display: flex; flex-direction: row">
-                    <button mat-flat-button [matMenuTriggerFor]="beforeMenu">
-                        <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image': avatar}">
-                        </div>
-                    </button>
-                </div>
-            </mat-card>
-
-
-        </div>
+        <mat-card class="avatar-menu">
+            <a mat-button routerLink="/" class="button" style="font-size: 20px;    align-self: center;">
+                <mat-icon aria-hidden="false">home</mat-icon>
+            </a>
+            <input matInput placeholder={{loginWelcome}} disabled class="welcome">
+            <div style="display: flex; flex-direction: row">
+                <button mat-flat-button [matMenuTriggerFor]="beforeMenu">
+                    <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image': avatar}">
+                    </div>
+                </button>
+            </div>
+        </mat-card>
         <mat-menu #beforeMenu="matMenu" xPosition="before">
             <button mat-menu-item routerLink="/admin">Admin Panel</button>
             <a mat-menu-item routerLink="/profile">Profile</a>
@@ -27,25 +19,4 @@
                 Out</button>
         </mat-menu>
     </div>
-
-    <ng-template #loginInputs>
-
-        <form [formGroup]="logInForm" (ngSubmit)="onSubmit()" class="login-form">
-            <a mat-button routerLink="/" class="button" style="font-size: 20px;     align-self: center;">
-                <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon>
-            </a>
-            <div>
-                <mat-form-field class="example-full-width padd">
-                    <input type="text" matInput placeholder="Email" formControlName="username">
-                </mat-form-field>
-                <mat-form-field class="example-full-width padd">
-                    <input type="password" matInput placeholder="Password" formControlName="password">
-                </mat-form-field>
-                <button mat-flat-button type="submit" gool class="button">Log
-                    In</button>
-                <a mat-button routerLink="/signup" gool class="button">Sign Up</a>
-            </div>
-
-        </form>
-    </ng-template>
 </div>

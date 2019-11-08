@@ -14,17 +14,23 @@ $bg_col1: red;
 .padd {
   padding: 10px;
   font-size: 12px;
-  width: 15%;
+  width: 80%;
 }
-.login-form {
+.login {
+  margin: auto;
+  width: 70%;
   text-align: end;
-  background-color: $bg_col;
   display: flex;
-
-  justify-content: space-between;
+  flex-direction: column;
+  border-radius: 5px;
+  padding: 5px;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(192, 192, 192, 0.5);
 }
 .button {
-  line-height: 20px;
+  width: 50%;
   font-size: 12px;
 }
 .example-header-image {

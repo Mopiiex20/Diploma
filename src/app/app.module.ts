@@ -5,8 +5,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeadderComponent} from './components/headder/headder.component';
-import {CartPopUp } from './components/admin/admin.component'
+import { HeadderComponent } from './components/headder/headder.component';
+import { CartPopUp } from './components/admin/admin.component'
 import { ContentComponent } from './components/content/content.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +22,7 @@ import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { UserService } from './services/users.service';
 import { AuthGuardService } from './services/auth-guard-service';
 import { AdminComponent } from './components/admin/admin.component';
+import { LoginComponent } from './components/login/login.component';
 
 export function tokenGetter() {
 
@@ -36,6 +37,7 @@ export function tokenGetter() {
     AppComponent,
     HeadderComponent,
     ContentComponent,
+    LoginComponent,
     RegisterComponent,
     ProfileComponent,
     CartPopUp,

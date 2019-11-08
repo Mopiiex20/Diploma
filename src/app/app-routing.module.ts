@@ -7,10 +7,12 @@ import {
   AuthGuardService as AuthGuard
 } from './services/auth-guard-service';
 import { AdminComponent } from './components/admin/admin.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-  { path: '', component: ContentComponent },
+  { path: 'home', component: ContentComponent },
   { path: 'signup', component: RegisterComponent },
+  { path: '', component: LoginComponent },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -19,8 +21,8 @@ const routes: Routes = [
 
   { path: 'admin', component: AdminComponent },
 
-  
-  { path: '**', redirectTo: '/' }
+
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

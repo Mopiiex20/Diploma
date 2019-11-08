@@ -59,20 +59,6 @@ export class HeadderComponent implements OnInit, DoCheck {
           password: loginData.password,
         })
       });
-
-    this.subCart = this.cartService.cart$.subscribe(
-      cartData => {
-        const currentBooks: any[] = JSON.parse(localStorage.getItem('books'));
-        let num = 0;
-        if (currentBooks) {
-          currentBooks.forEach((book: any) => {
-            num += book.quantity;
-
-          });
-          this.cartBadge = num;
-        } else this.cartBadge = undefined;
-
-      });
   }
 
   

@@ -4,7 +4,6 @@
             <mat-form-field class="example-full-width padd">
                 <input type="text" matInput placeholder="Title" formControlName="title">
             </mat-form-field>
-
             <mat-form-field>
                 <mat-label>Number od questions in test</mat-label>
                 <mat-select [(value)]="selected">
@@ -13,20 +12,33 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-
             <form [formGroup]="Questions" (ngSubmit)="onSubmit1()" class="login-form">
                 <div *ngFor="let q1 of arrayQ">
-                    <mat-form-field>
-                        <input type="text" matInput placeholder="Question {{q1+1}}" formControlName={{q1}}>
+                    <mat-form-field class="questionTitle">
+                        <input type="text" matInput placeholder="Question {{q1+1}}" formControlName="question{{q1+1}}">
                     </mat-form-field>
+                    <div>
+                        <mat-form-field>
+                            <input type="text" matInput placeholder="Answer 1"
+                                formControlName="question{{q1+1}}Answer1">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input type="text" matInput placeholder="Answer 2"
+                                formControlName="question{{q1+1}}Answer2">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input type="text" matInput placeholder="Answer 3"
+                                formControlName="question{{q1+1}}Answer3">
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input type="text" matInput placeholder="Answer 4"
+                                formControlName="question{{q1+1}}Answer4">
+                        </mat-form-field>
+                    </div>
+
                 </div>
-
             </form>
-
-
-
             <button mat-flat-button type="submit" gool class="button">ADD</button>
         </div>
-
     </form>
 </div>
