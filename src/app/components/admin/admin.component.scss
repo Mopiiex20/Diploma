@@ -1,7 +1,43 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-.questionTitle{
-    align-self: center;
-    position: relative;
-    left: 35%;
-    text-align: center;
+.questionTitle {
+  align-self: center;
+  width: 100%;
+  text-align: center;
+}
+.head-row {
+  text-align: center;
+}
+.table-content-row {
+  text-align: end;
+}
+.head-row-name {
+  text-align: center;
+  width: 70%;
+}
+.quantityButton {
+  width: "10%";
+}
+.top-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.tests-table {
+  margin-top: 10px;
+}
+.add-button {
+  padding: 0 10px;
+  height: fit-content;
+  align-self: center;
+}
+.search-field {
+  padding: 0px;
+}
+.dialog-panel{
+  background-color: lightcyan;
+}
+.answers{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

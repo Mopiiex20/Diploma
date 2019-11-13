@@ -90,7 +90,7 @@ export class HeadderComponent implements OnInit, DoCheck {
       const decoded = this.jwtHelper.decodeToken(token);
 
       this.avatar = `url("${decoded.avatar}")`;
-      this.loginWelcome = `Welcome - ${decoded.firstName} !`;
+      this.loginWelcome = `Доброго дня - ${decoded.firstName} !`;
 
     }
 
@@ -102,7 +102,7 @@ export class HeadderComponent implements OnInit, DoCheck {
       const decoded = this.jwtHelper.decodeToken(token);
       this.avatar = `url("${decoded.avatar}")`;
       this.check = true;
-      this.loginWelcome = `Welcome  - ${decoded.firstName} !`;
+      this.loginWelcome = `Доброго дня - ${decoded.firstName} !`;
       const currentBooks: any[] = JSON.parse(localStorage.getItem('books'));
       if (currentBooks) {
         let num = 0;

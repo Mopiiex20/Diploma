@@ -1,36 +1,22 @@
 <div style="width: 100%">
     <form [formGroup]="RegisterForm" (ngSubmit)="registerNewUser()" class="formk">
-        
+
         <mat-form-field class="example-full-width padd">
-            <input
-                matInput
-                placeholder="User's name"
-                formControlName="firstName">
+            <input matInput placeholder="Ім'я та Прізвище" formControlName="firstName">
         </mat-form-field>
 
         <mat-form-field class="example-full-width padd">
-            <input
-                type="text"
-                matInput
-                placeholder="Email"
-                formControlName="email">
+            <input type="text" matInput placeholder="Електронна пошта" formControlName="email">
         </mat-form-field>
 
         <mat-form-field class="example-full-width padd">
-            <input
-            type="password"
-                matInput
-                placeholder="Password"
-                formControlName="password">
+            <input type="password" matInput placeholder="Пароль" formControlName="password">
         </mat-form-field>
 
         <mat-form-field class="example-full-width padd">
-            <input
-                matInput
-                placeholder="Age"
-                formControlName="age">
+            <input matInput placeholder="Группа" formControlName="age">
         </mat-form-field>
-        <button mat-flat-button type="submit">Sign Up</button>
+        <button mat-flat-button type="submit">Зареєструватися!</button>
     </form>
 
 </div>

@@ -21,8 +21,14 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { UserService } from './services/users.service';
 import { AuthGuardService } from './services/auth-guard-service';
+import { AdminGuardService } from './services/admin-guard.service';
+
 import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { BegginTestComponent } from './components/beggin-test/beggin-test.component';
+import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
+import { CountdownModule } from 'ngx-countdown';
 
 export function tokenGetter() {
 
@@ -40,6 +46,7 @@ export function tokenGetter() {
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    BegginTestComponent,
     CartPopUp,
     AdminComponent
   ],
@@ -50,6 +57,7 @@ export function tokenGetter() {
     BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
+    CountdownModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -69,8 +77,13 @@ export function tokenGetter() {
     LoginService,
     AuthService,
     AuthGuardService,
+    AdminGuardService,
     { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptorService, multi: true },
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } }
+    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
+    {
+      provide: MAT_RADIO_DEFAULT_OPTIONS,
+      useValue: { color: 'accent' },
+    }
   ],
   bootstrap: [AppComponent],
 })

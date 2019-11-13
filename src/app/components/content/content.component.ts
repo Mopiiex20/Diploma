@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import BooksService from '../../services/tests.service'
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { debounceTime, tap, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import TestService from '../../services/tests.service';
 import { CartService } from 'src/app/services/common.servise';
+import { TestModel } from '../../models/test'
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-content',
@@ -13,39 +11,34 @@ import { CartService } from 'src/app/services/common.servise';
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit {
-
-  bookTitle = new FormControl();
-  bookForm: FormGroup = this.formBuilder.group({
-    bookTitle: this.bookTitle
-  })
-
-  results: any[];
-
-
-  constructor(private formBuilder: FormBuilder, private testsService: TestService, private cartServise: CartService) { }
-
+  results: TestModel;
+  isTestAvalible: boolean = false;
+  testStart: boolean = false;
+  constructor(private testsService: TestService, private cartServise: CartService, private router: Router) { }
   ngOnInit() {
-    this.searchBook();
-    this.testsService.get('tests').subscribe((data: any) => {
-      console.log(data);
-      
-      this.results = data
+    this.testsService.get('tests').subscribe((data: Array<TestModel>) => {
+      data.forEach(
+        (element: TestModel) => {
+          if (element.isCurrentlyDoing) {
+            this.results = element;
+            this.isTestAvalible = true
+          }
+        }
+      )
     });
   }
-
-  addToCart(book: any) {
-    this.cartServise.addToCart(book);
-
+  checkForTest() {
+    this.testsService.get('tests').subscribe((data: Array<TestModel>) => {
+      data.forEach(
+        (element: TestModel) => {
+          if (element.isCurrentlyDoing) {
+            this.results = element;
+            this.isTestAvalible = true
+          }
+        })
+    });
   }
-  searchBook() {
-    this.bookTitle.valueChanges.pipe(
-      debounceTime(1000),
-      switchMap((title) => {
-        console.log(title)
-        return this.testsService.searchBook(title);
-      })
-    ).subscribe(res => this.results = res);
+  begginTest() {
+    this.testStart = true
   }
-
-
 }

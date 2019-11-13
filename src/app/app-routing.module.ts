@@ -6,8 +6,12 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {
   AuthGuardService as AuthGuard
 } from './services/auth-guard-service';
+import {
+  AdminGuardService as AdminGuard
+} from './services/admin-guard.service';
 import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
+import { BegginTestComponent } from './components/beggin-test/beggin-test.component';
 
 const routes: Routes = [
   { path: 'home', component: ContentComponent },
@@ -18,10 +22,10 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [AuthGuard]
   },
-
-  { path: 'admin', component: AdminComponent },
-
-
+  {
+    path: 'admin', component: AdminComponent,
+    canActivate: [AdminGuard]
+  },
   { path: '**', redirectTo: '' }
 ];
 

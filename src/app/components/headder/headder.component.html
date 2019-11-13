@@ -1,7 +1,7 @@
 <div>
     <div>
         <mat-card class="avatar-menu">
-            <a mat-button routerLink="/" class="button" style="font-size: 20px;    align-self: center;">
+            <a mat-button routerLink="/" class="button" style="font-size: 20px;align-self: center;">
                 <mat-icon aria-hidden="false">home</mat-icon>
             </a>
             <input matInput placeholder={{loginWelcome}} disabled class="welcome">
@@ -13,10 +13,9 @@
             </div>
         </mat-card>
         <mat-menu #beforeMenu="matMenu" xPosition="before">
-            <button mat-menu-item routerLink="/admin">Admin Panel</button>
-            <a mat-menu-item routerLink="/profile">Profile</a>
-            <button mat-menu-item routerLink="/" (click)="logout()">Log
-                Out</button>
+            <button mat-menu-item routerLink="/admin">Панель Керування</button>
+            <a mat-menu-item routerLink="/profile">Профіль</a>
+            <button mat-menu-item routerLink="/" (click)="logout()">Завершити сессію</button>
         </mat-menu>
     </div>
 </div>

@@ -1,10 +1,13 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-$bg_col : rgb(255, 210, 88);
+$bg_col: rgb(255, 210, 88);
 
 .headder {
-    background-color: $bg_col;
+  background-color: $bg_col;
 }
-.mainContainer { 
-    background-color: azure;
+.mainContainer {
+  padding: 10px;
+}
+.cdk-overlay-pane{
+  background-color: aqua !important;
 }

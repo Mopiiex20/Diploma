@@ -1,44 +1,50 @@
-<div>
+<div style="height: 100%">
     <form [formGroup]="AddTestForm" (ngSubmit)="onSubmit()" class="login-form">
         <div style="display: flex ; flex-direction: column">
             <mat-form-field class="example-full-width padd">
-                <input type="text" matInput placeholder="Title" formControlName="title">
+                <input type="text" matInput placeholder="Назва тесту" formControlName="title">
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Number od questions in test</mat-label>
-                <mat-select [(value)]="selected">
-                    <mat-option *ngFor="let q of ques_num" [value]="q.value">
-                        {{q.viewValue}}
-                    </mat-option>
-                </mat-select>
+                    <mat-label>Тривалість тесту</mat-label>
+                    <mat-select [formControl]="testLengthControl">
+                      <mat-option *ngFor="let item of testLength" [value]="item.value">
+                        {{item.viewValue}}
+                      </mat-option>
+                    </mat-select>
             </mat-form-field>
-            <form [formGroup]="Questions" (ngSubmit)="onSubmit1()" class="login-form">
+            <mat-label>Кількість питаннь</mat-label>
+            <div>
+                <button type="button" mat-raised-button color="primary" class="quantityButton" (click)='incrementQuestions()'>+</button>
+                <mat-label>{{selected}}</mat-label>
+                <button type="button" mat-raised-button color="primary" class="quantityButton" (click)='decrementQuestions()'>-</button>
+            </div>
+            <form [formGroup]="Questions" class="login-form">
                 <div *ngFor="let q1 of arrayQ">
                     <mat-form-field class="questionTitle">
-                        <input type="text" matInput placeholder="Question {{q1+1}}" formControlName="question{{q1+1}}">
+                        <input type="text" matInput placeholder="Питання {{q1+1}}" formControlName="question{{q1+1}}">
                     </mat-form-field>
-                    <div>
+                    <div class="answers">
                         <mat-form-field>
-                            <input type="text" matInput placeholder="Answer 1"
+                            <input type="text" matInput placeholder="Відповідь 1(правильна)"
                                 formControlName="question{{q1+1}}Answer1">
                         </mat-form-field>
                         <mat-form-field>
-                            <input type="text" matInput placeholder="Answer 2"
+                            <input type="text" matInput placeholder="Відповідь 2"
                                 formControlName="question{{q1+1}}Answer2">
                         </mat-form-field>
                         <mat-form-field>
-                            <input type="text" matInput placeholder="Answer 3"
+                            <input type="text" matInput placeholder="Відповідь 3"
                                 formControlName="question{{q1+1}}Answer3">
                         </mat-form-field>
                         <mat-form-field>
-                            <input type="text" matInput placeholder="Answer 4"
+                            <input type="text" matInput placeholder="Відповідь 4"
                                 formControlName="question{{q1+1}}Answer4">
                         </mat-form-field>
                     </div>
-
                 </div>
             </form>
-            <button mat-flat-button type="submit" gool class="button">ADD</button>
+
+            <button mat-raised-button color="primary" type="submit" gool class="button">Додати тест</button>
         </div>
     </form>
 </div>

@@ -10,12 +10,22 @@ export default class AuthService {
     stUrl = environment.url;
     constructor(private http: HttpClient, public jwtHelper: JwtHelperService) { }
 
-
     public isAuthenticated(): boolean {
         const token = localStorage.getItem('token');
         // Check whether the token is expired and return
         // true or false
         return !this.jwtHelper.isTokenExpired(token);
+    }
+
+    public isAdmin(): boolean {
+        const token = localStorage.getItem('token');
+        let decoded = this.jwtHelper.decodeToken(token);
+        let permissions = decoded.permissions;
+        let isAdministrator = permissions.find((per: string) => per == 'userAdmin')
+        if (isAdministrator) {
+            return true
+        }
+        return false;
     }
 
     post(url: string, body: any): Observable<any> {
@@ -28,7 +38,5 @@ export default class AuthService {
 
     getToken() {
         return localStorage.getItem("token");
-
     }
-
 }

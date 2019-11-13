@@ -1,4 +1,13 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 $bg_col: rgb(255, 210, 88);
 
-
+.refreshButton {
+  align-self: center;
+  width: 90%;
+  margin: 5%;
+}
+.testOverview {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

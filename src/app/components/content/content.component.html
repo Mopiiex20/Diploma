@@ -1,19 +1,23 @@
-<div>
-    <form [formGroup]="bookForm">
-        <mat-form-field class="example-full-width padd">
-            <input matInput placeholder="Search for Title" type="text" formControlName="bookTitle">
-        </mat-form-field>
-    </form>
-    <ul>
-        <li *ngFor="let result of results" style="display: flex; flex-direction:
-            column">
+<ng-container *ngIf="isTestAvalible; else elseTemplate">
+    <ng-container *ngIf="testStart; else testInfo">
+        <app-beggin-test></app-beggin-test>
+    </ng-container>
+    <ng-template #testInfo>
+        <div class="testOverview">
             <span>
-                Title: {{result.title}}
+                Назва : {{results.title}}
             </span>
             <span>
-                № of questions: {{result.questions.length}}
+                Кількість питаннь : {{results.questions.length}}
             </span>
-            <button mat-flat-primary-button (click)='addToCart(result)'>Start Test</button>
-        </li>
-    </ul>
-</div>
+            <span>
+                Тривалість тесту : {{results.duration}}
+            </span>
+        </div>
+        <button mat-raised-button (click)='begginTest()'>Почати тест</button>
+    </ng-template>
+</ng-container>
+
+<ng-template #elseTemplate>
+    <button mat-raised-button (click)='checkForTest()' class="refreshButton">Оновити</button>
+</ng-template>
