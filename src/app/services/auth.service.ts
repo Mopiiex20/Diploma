@@ -32,6 +32,10 @@ export default class AuthService {
         return this.http.post<any>(`${this.stUrl}${url}`, body)
     }
 
+    getAvatar(url: string, body: any): Observable<any> {
+        return this.http.post<any>(`${this.stUrl}${url}`, body)
+    }
+
     get(url: string): Observable<any> {
         return this.http.get<any>(`${this.stUrl}${url}`)
     }

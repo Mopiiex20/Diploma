@@ -1,0 +1,6 @@
+<div *ngIf="error;else success">
+  {{errorMessage}}
+</div>
+<ng-template #success>
+  Ви набрали {{persantage}} % правильних відповідей!
+</ng-template>

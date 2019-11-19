@@ -4,6 +4,7 @@ import AuthService from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/common.servise';
+import { GroupList } from '../../../assets/shared/groupList.enum'
 
 @Component({
   selector: 'register',
@@ -19,16 +20,16 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private loginService: LoginService
   ) { }
+  groups: any;
 
   RegisterForm = new FormGroup({
     email: new FormControl(''),
     password: new FormControl(''),
     firstName: new FormControl(''),
-    age: new FormControl('')
+    userGroup: new FormControl('')
 
   });
   registerNewUser() {
-
     const form = this.RegisterForm.value;
 
     this.authService.post('users/signup', form).subscribe(
@@ -47,6 +48,7 @@ export class RegisterComponent implements OnInit {
     );
   }
   ngOnInit() {
+    this.groups = Object.values(GroupList);
   }
 
 

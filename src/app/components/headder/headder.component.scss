@@ -38,8 +38,5 @@ $bg_col1: red;
 }
 
 .welcome {
-  width: 100%;
-  background-color: $bg_col;
-  border: none;
-  text-align: center;
+  align-self: center;
 }

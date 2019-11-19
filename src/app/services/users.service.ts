@@ -9,7 +9,15 @@ export class UserService {
     stUrl = environment.url;
     constructor(private http: HttpClient) { }
 
+    get(url?: string): Observable<any> {
+        return this.http.get<any>(`${this.stUrl}users/${url}`)
+    }
+
+    post(url: string, body: any): Observable<any> {
+        return this.http.post<any>(`${this.stUrl}users/${url}`, body)
+    }
+
     put(url: string, body: any): Observable<any> {
-        return this.http.put<any>(`${this.stUrl}${url}`, body)
+        return this.http.put<any>(`${this.stUrl}users/${url}`, body)
     }
 }

@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import AuthService from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
-import { LoginService, CartService } from '../../services/common.servise';
+import { LoginService } from '../../services/common.servise';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
 
@@ -22,7 +22,6 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService,
     private authService: AuthService,
     public jwtHelper: JwtHelperService,
-    private cartService: CartService,
     private _snackBar: MatSnackBar,
     private router: Router
   ) {
@@ -46,21 +45,21 @@ export class LoginComponent implements OnInit {
     this.authService.post('login', body).subscribe(
       (data: any) => {
         this.token = data.token;
+        let avatar: string = data.avatar;
         localStorage.setItem('token', this.token);
+        this.loginService.loginToHeader({ token: this.token, avatar: avatar })
         this.router.navigateByUrl('home')
       },
       (error: any) => {
         this._snackBar.open(error.error.error);
       })
   }
+
   ngOnInit() {
     let isLoggedIn = this.authService.isAuthenticated();
     if (isLoggedIn) {
       this.router.navigateByUrl('home')
     }
-
-
   }
-
 
 }

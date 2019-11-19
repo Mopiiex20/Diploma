@@ -1,22 +1,26 @@
-<div style="height: 100%">
+<div>
     <form [formGroup]="AddTestForm" (ngSubmit)="onSubmit()" class="login-form">
         <div style="display: flex ; flex-direction: column">
             <mat-form-field class="example-full-width padd">
                 <input type="text" matInput placeholder="Назва тесту" formControlName="title">
             </mat-form-field>
             <mat-form-field>
-                    <mat-label>Тривалість тесту</mat-label>
-                    <mat-select [formControl]="testLengthControl">
-                      <mat-option *ngFor="let item of testLength" [value]="item.value">
+                <mat-label>Тривалість тесту</mat-label>
+                <mat-select [formControl]="testLengthControl">
+                    <mat-option *ngFor="let item of testLength" [value]="item.value">
                         {{item.viewValue}}
-                      </mat-option>
-                    </mat-select>
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
-            <mat-label>Кількість питаннь</mat-label>
-            <div>
-                <button type="button" mat-raised-button color="primary" class="quantityButton" (click)='incrementQuestions()'>+</button>
-                <mat-label>{{selected}}</mat-label>
-                <button type="button" mat-raised-button color="primary" class="quantityButton" (click)='decrementQuestions()'>-</button>
+            <div class="quantity">
+                <mat-label class="q-text">Кількість питаннь</mat-label>
+                <div class="select-quantity">
+                    <button type="button" mat-raised-button color="primary" class="quantityButton"
+                        (click)='incrementQuestions()'>+</button>
+                    <mat-label>{{selected}}</mat-label>
+                    <button type="button" mat-raised-button color="primary" class="quantityButton"
+                        (click)='decrementQuestions()'>-</button>
+                </div>
             </div>
             <form [formGroup]="Questions" class="login-form">
                 <div *ngFor="let q1 of arrayQ">

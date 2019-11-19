@@ -12,10 +12,13 @@ import {
 import { AdminComponent } from './components/admin/admin.component';
 import { LoginComponent } from './components/login/login.component';
 import { BegginTestComponent } from './components/beggin-test/beggin-test.component';
+import { UsersComponent } from './components/users/users.component';
+import { PassedTestComponent } from './components/passed-test/passed-test.component';
 
 const routes: Routes = [
   { path: 'home', component: ContentComponent },
   { path: 'signup', component: RegisterComponent },
+  { path: 'passed-test', component: PassedTestComponent },
   { path: '', component: LoginComponent },
   {
     path: 'profile',
@@ -24,6 +27,10 @@ const routes: Routes = [
   },
   {
     path: 'admin', component: AdminComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'users', component: UsersComponent,
     canActivate: [AdminGuard]
   },
   { path: '**', redirectTo: '' }

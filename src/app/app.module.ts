@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeadderComponent } from './components/headder/headder.component';
-import { CartPopUp } from './components/admin/admin.component'
+import { PopUp } from './components/admin/admin.component'
 import { ContentComponent } from './components/content/content.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,11 +29,11 @@ import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { BegginTestComponent } from './components/beggin-test/beggin-test.component';
 import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { CountdownModule } from 'ngx-countdown';
+import { UsersComponent } from './components/users/users.component';
+import { PassedTestComponent } from './components/passed-test/passed-test.component';
 
 export function tokenGetter() {
-
   return localStorage.getItem("token");
-
 }
 
 
@@ -46,8 +46,10 @@ export function tokenGetter() {
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    UsersComponent,
     BegginTestComponent,
-    CartPopUp,
+    PassedTestComponent,
+    PopUp,
     AdminComponent
   ],
   imports: [
@@ -70,7 +72,7 @@ export function tokenGetter() {
       }
     })
   ],
-  entryComponents: [CartPopUp],
+  entryComponents: [PopUp],
   providers: [
     UserService,
     JwtHelperService,
@@ -82,7 +84,7 @@ export function tokenGetter() {
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
     {
       provide: MAT_RADIO_DEFAULT_OPTIONS,
-      useValue: { color: 'accent' },
+      useValue: { color: 'primary' },
     }
   ],
   bootstrap: [AppComponent],

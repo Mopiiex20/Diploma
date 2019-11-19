@@ -13,3 +13,8 @@ export interface TestModel {
     questions?: Array<Questions>;
     duration: number
 }
+
+export interface AnswersWithTest {
+    answers: object;
+    test: TestModel
+}

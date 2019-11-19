@@ -1,11 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import AuthService from '../../services/auth.service';
-import { LoginService } from '../../services/common.servise';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../services/users.service';
 
 @Component({
-  selector: 'profile',
+  selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
@@ -16,11 +15,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   avatar: any;
 
-  constructor(private missionService: LoginService, private authService: AuthService, private userService: UserService) {
-    this.subscription = this.missionService.missionAnnounced$.subscribe(
-      mission => {
-        this.login = mission;
-      });
+  constructor( private authService: AuthService, private userService: UserService) {
   }
 
   toBase64 = (file: any) => new Promise((resolve, reject) => {
@@ -51,14 +46,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.results = [];
     this.authService.get('users/currentUser').subscribe((data: any) => {
       this.results.push(data.user);
-      console.log(this.results);
     }
     );
   }
 
   ngOnDestroy() {
     this.results = [];
-    // this.subscription.unsubscribe();
   }
 
 }

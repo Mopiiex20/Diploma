@@ -1,6 +1,5 @@
 <div style="width: 100%">
     <form [formGroup]="RegisterForm" (ngSubmit)="registerNewUser()" class="formk">
-
         <mat-form-field class="example-full-width padd">
             <input matInput placeholder="Ім'я та Прізвище" formControlName="firstName">
         </mat-form-field>
@@ -14,9 +13,14 @@
         </mat-form-field>
 
         <mat-form-field class="example-full-width padd">
-            <input matInput placeholder="Группа" formControlName="age">
+            <mat-label>Група</mat-label>
+            <mat-select formControlName="userGroup">
+                <mat-option *ngFor="let item of groups" [value]="item">
+                    {{item}}
+                </mat-option>
+            </mat-select>
         </mat-form-field>
-        <button mat-flat-button type="submit">Зареєструватися!</button>
+        <button mat-raised-button color='primary' type="submit">Зареєструватися!</button>
     </form>
 
 </div>

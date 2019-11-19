@@ -1,21 +1,34 @@
-<div>
+<div *ngIf="!isTestStarted">
     <div>
         <mat-card class="avatar-menu">
-            <a mat-button routerLink="/" class="button" style="font-size: 20px;align-self: center;">
+            <a mat-button routerLink="/">
                 <mat-icon aria-hidden="false">home</mat-icon>
             </a>
-            <input matInput placeholder={{loginWelcome}} disabled class="welcome">
-            <div style="display: flex; flex-direction: row">
-                <button mat-flat-button [matMenuTriggerFor]="beforeMenu">
-                    <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image': avatar}">
-                    </div>
-                </button>
+            <span class="welcome">{{loginWelcome}}</span>
+            <div *ngIf="check ; else login" style="display: flex; flex-direction: row">
+                <div mat-card-avatar class="example-header-image" [matMenuTriggerFor]="beforeMenu"
+                    [ngStyle]="{'background-image': avatar}">
+                </div>
             </div>
+            <ng-template #login>
+                <a mat-button routerLink="/" class="button">
+                    Авторизуватися
+                </a>
+            </ng-template>
         </mat-card>
         <mat-menu #beforeMenu="matMenu" xPosition="before">
-            <button mat-menu-item routerLink="/admin">Панель Керування</button>
-            <a mat-menu-item routerLink="/profile">Профіль</a>
-            <button mat-menu-item routerLink="/" (click)="logout()">Завершити сессію</button>
+            <div *ngIf="!check">
+                <button mat-menu-item disabled=true>Увійдіть у систему</button>
+            </div>
+            <div *ngIf="admin">
+                <button mat-menu-item routerLink="/admin">Панель Керування</button>
+            </div>
+            <div *ngIf="check">
+                <a mat-menu-item routerLink="/profile">Профіль</a>
+            </div>
+            <div *ngIf="check">
+                <button mat-menu-item routerLink="/" (click)="logout()">Завершити сессію</button>
+            </div>
         </mat-menu>
     </div>
 </div>

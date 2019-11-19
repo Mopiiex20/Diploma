@@ -10,11 +10,13 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'popUp',
-  templateUrl: './cartPopUp.html',
+  templateUrl: './PopUp.html',
   styleUrls: ['./admin.component.scss']
 })
-export class CartPopUp implements OnInit, DoCheck {
+export class PopUp implements OnInit, DoCheck {
+
   constructor(private dialog: MatDialog, private testService: TestService) { }
+
   testLength: any[] = [
     { value: 15, viewValue: '15 хвилин' },
     { value: 30, viewValue: '30 хвилин' },
@@ -100,9 +102,9 @@ export class CartPopUp implements OnInit, DoCheck {
 })
 export class AdminComponent implements OnInit {
 
-  bookTitle = new FormControl();
-  bookForm: FormGroup = this.formBuilder.group({
-    bookTitle: this.bookTitle
+  testTitle = new FormControl();
+  testsForm: FormGroup = this.formBuilder.group({
+    testTitle: this.testTitle
   })
 
   displayedColumns: string[] = ['Name', 'ID', 'Number', 'Status'];
@@ -134,9 +136,9 @@ export class AdminComponent implements OnInit {
   }
 
   openBottomSheet(): void {
-    const dialog = this.dialog.open(CartPopUp, {
-      height: "100%",
-      width:"80%"
+    const dialog = this.dialog.open(PopUp, {
+      height:'100%',
+      width: "80%"
     });
     dialog.afterClosed().subscribe(result => {
       this.testService.get('tests').subscribe((data: any) => {
@@ -146,11 +148,13 @@ export class AdminComponent implements OnInit {
   }
 
   searchBook() {
-    this.bookTitle.valueChanges.pipe(
-      debounceTime(1000),
-      switchMap((title) => {
-        return this.testService.searchBook(title);
-      })
-    ).subscribe(res => this.results = res);
+    this.testTitle.valueChanges
+      .pipe(
+        debounceTime(1000),
+        switchMap((title) => {
+          return this.testService.searchBook(title);
+        }
+        )
+      ).subscribe(res => this.results = res);
   }
 }

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import TestService from '../../services/tests.service';
-import { CartService } from 'src/app/services/common.servise';
 import { TestModel } from '../../models/test'
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -10,13 +10,15 @@ import { Router } from '@angular/router';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit {
-  results: TestModel;
-  isTestAvalible: boolean = false;
-  testStart: boolean = false;
-  constructor(private testsService: TestService, private cartServise: CartService, private router: Router) { }
-  ngOnInit() {
-    this.testsService.get('tests').subscribe((data: Array<TestModel>) => {
+export class ContentComponent implements OnInit, OnDestroy {
+
+  public subscription: Subscription;
+  public results: TestModel;
+  public isTestAvalible: boolean = false;
+  public testStart: boolean = false;
+
+  constructor(private testsService: TestService, private router: Router) {
+    this.subscription = this.testsService.get('tests').subscribe((data: Array<TestModel>) => {
       data.forEach(
         (element: TestModel) => {
           if (element.isCurrentlyDoing) {
@@ -27,7 +29,16 @@ export class ContentComponent implements OnInit {
       )
     });
   }
-  checkForTest() {
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
+  }
+
+  ngOnInit() {
+
+  }
+
+  checkForTest(): void {
     this.testsService.get('tests').subscribe((data: Array<TestModel>) => {
       data.forEach(
         (element: TestModel) => {
@@ -38,7 +49,9 @@ export class ContentComponent implements OnInit {
         })
     });
   }
-  begginTest() {
-    this.testStart = true
+
+  begginTest(): void {
+    this.testStart = true;
+    this.testsService.begginTest();
   }
 }

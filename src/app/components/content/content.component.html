@@ -3,18 +3,21 @@
         <app-beggin-test></app-beggin-test>
     </ng-container>
     <ng-template #testInfo>
-        <div class="testOverview">
-            <span>
-                Назва : {{results.title}}
-            </span>
-            <span>
-                Кількість питаннь : {{results.questions.length}}
-            </span>
-            <span>
-                Тривалість тесту : {{results.duration}}
-            </span>
+        <div class="test-container">
+            <div class="testOverview">
+                <span class="testTitle">
+                    Назва : {{results.title}}
+                </span>
+                <span>
+                    Кількість питаннь : {{results.questions.length}}
+                </span>
+                <span>
+                    Тривалість тесту : {{results.duration}} хв.
+                </span>
+            </div>
+            <button mat-raised-button (click)='begginTest()' class="begginTest">Почати тест</button>
         </div>
-        <button mat-raised-button (click)='begginTest()'>Почати тест</button>
+
     </ng-template>
 </ng-container>
 
