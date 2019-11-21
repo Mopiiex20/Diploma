@@ -34,7 +34,7 @@ export default class TestService {
         let counter: number = 0;
         data.test.questions.forEach(
             (element: Questions, index: number) => {
-                if (data.answers[index] = element.answer1) {
+                if (data.answers[`q${index}`] == element.answers[0]) {
                     counter++
                 }
             }

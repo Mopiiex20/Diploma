@@ -20,4 +20,9 @@ export class UserService {
     put(url: string, body: any): Observable<any> {
         return this.http.put<any>(`${this.stUrl}users/${url}`, body)
     }
+
+    delete(id: string): Observable<any> {
+        return this.http.delete<any>(`${this.stUrl}users/${id}`)
+    }
+
 }

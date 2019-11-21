@@ -1,12 +1,9 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import TestService from '../../services/tests.service';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { FormGroup, FormControl, FormBuilder, RequiredValidator } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { TestModel, Questions } from '../../models/test';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'popUp',
@@ -17,7 +14,7 @@ export class PopUp implements OnInit, DoCheck {
 
   constructor(private dialog: MatDialog, private testService: TestService) { }
 
-  testLength: any[] = [
+  public testLength: any[] = [
     { value: 15, viewValue: '15 хвилин' },
     { value: 30, viewValue: '30 хвилин' },
     { value: 45, viewValue: '45 хвилин' },
@@ -45,10 +42,7 @@ export class PopUp implements OnInit, DoCheck {
         if (name === `question${index + 1}`) {
           let currentQuestion: Questions = {
             title: keyValues[idx],
-            answer1: keyValues[idx + 1],
-            answer2: keyValues[idx + 2],
-            answer3: keyValues[idx + 3],
-            answer4: keyValues[idx + 4],
+            answers: [keyValues[idx + 1], keyValues[idx + 2], keyValues[idx + 3], keyValues[idx + 4]],
           }
           arrQuestions.push(currentQuestion)
         }
@@ -81,10 +75,15 @@ export class PopUp implements OnInit, DoCheck {
       const arr = [];
       for (let index = 0; index < this.selected; index++) {
         this.Questions.addControl(`question${index + 1}`, new FormControl(''));
+
         this.Questions.addControl(`question${index + 1}Answer1`, new FormControl(''))
+
         this.Questions.addControl(`question${index + 1}Answer2`, new FormControl(''))
+
         this.Questions.addControl(`question${index + 1}Answer3`, new FormControl(''))
+
         this.Questions.addControl(`question${index + 1}Answer4`, new FormControl(''))
+
         arr.push(index)
       }
       this.arrayQ = arr
@@ -93,6 +92,7 @@ export class PopUp implements OnInit, DoCheck {
 
   ngOnInit() {
   }
+
 }
 
 @Component({
@@ -123,7 +123,6 @@ export class AdminComponent implements OnInit {
     } else {
       body.isCurrentlyDoing = true;
     }
-
     this.testService.post('tests/currentTask', body).subscribe((data: any) => {
     });
   }
@@ -137,7 +136,7 @@ export class AdminComponent implements OnInit {
 
   openBottomSheet(): void {
     const dialog = this.dialog.open(PopUp, {
-      height:'100%',
+      height: '100%',
       width: "80%"
     });
     dialog.afterClosed().subscribe(result => {

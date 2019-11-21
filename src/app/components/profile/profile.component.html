@@ -1,28 +1,26 @@
-<div>
-    <div>
-        {{login}}
-    </div>
-    <br>
-    <div *ngFor="let item of results" style="display: flex;
-        flex-direction:column; align-items: center">
-        <input accept="image/*" id="text-button-file" multiple type="file" />
-        <button (click)= 'UploadAvatar()' >Upload new Avatar</button>
-        <span>
-            E-mail : {{item.username}}
-        </span>
-        <span>
-            User's name : {{item.firstName}}
-        </span>
-        <span>
-            Age: {{item.age}}
-        </span>
-        <div>
-            Permissions :
-            <div *ngFor="let per of item.permissions">
-                {{per}}
-            </div>
-        </div>
-
-    </div>
-
+<div *ngIf="loading;else profileData">
+    <mat-spinner class="spinner"></mat-spinner>
 </div>
+<ng-template #profileData>
+    <div class="main">
+        <div class="main-left-side">
+            <img class="avatar" src="{{avatar}}" alt="s">
+            <input class="file-select" accept="image/*" id="text-button-file" type="file" />
+            <button mat-raised-button (click)='UploadAvatar()'>Upload new Avatar</button>
+        </div>
+        <div class="main-right-side">
+            <span class="user-fields">
+                E-mail : {{user.username}}
+            </span>
+            <mat-divider></mat-divider>
+            <span class="user-fields">
+                User's name : {{user.firstName}}
+            </span>
+            <mat-divider></mat-divider>
+            <span class="user-fields">
+                Group: {{user.userGroup}}
+            </span>
+        </div>
+        <div class="profile-container"></div>
+    </div>
+</ng-template>

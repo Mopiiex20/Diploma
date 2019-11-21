@@ -1,9 +1,6 @@
 export interface Questions {
     title: string;
-    answer1: string;
-    answer2: string;
-    answer3: string;
-    answer4: string;
+    answers: string[]
 }
 
 export interface TestModel {

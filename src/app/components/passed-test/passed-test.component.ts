@@ -46,10 +46,8 @@ export class PassedTestComponent implements OnInit {
             }
           )
         }
-
       }
     )
-
   }
 
 }

@@ -7,10 +7,7 @@
     <mat-label class="questionTitle">{{item.title}}</mat-label>
     <mat-divider></mat-divider>
     <mat-radio-group (change)='valueChange($event,i)' value='1' class="answers" aria-label="Select an option">
-      <mat-radio-button class="radio" value={{item.answer1}}>{{item.answer1}}</mat-radio-button>
-      <mat-radio-button class="radio" value={{item.answer2}}>{{item.answer2}}</mat-radio-button>
-      <mat-radio-button class="radio" value={{item.answer3}}>{{item.answer3}}</mat-radio-button>
-      <mat-radio-button class="radio" value={{item.answer4}}>{{item.answer4}}</mat-radio-button>
+      <mat-radio-button *ngFor="let answer of item.answers" class="radio" value={{answer}}>{{answer}}</mat-radio-button>
     </mat-radio-group>
   </div>
   <button mat-raised-button (click)='endTest()' class="end-test">Завершити виконання</button>
