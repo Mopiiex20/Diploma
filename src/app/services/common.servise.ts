@@ -1,5 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
 import { Subject } from 'rxjs';
+import { UserInfo } from 'firebase';
+import { UserModel } from '../models';
 
 
 
@@ -9,7 +11,7 @@ interface LoginRequest {
 }
 
 export interface LoginData {
-    token: string,
+    user: UserModel,
     avatar: string
 }
 

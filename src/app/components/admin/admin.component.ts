@@ -4,6 +4,8 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
 import { TestModel, Questions } from '../../models/test';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { firestore } from 'firebase';
 
 @Component({
   selector: 'popUp',
@@ -109,11 +111,12 @@ export class AdminComponent implements OnInit {
 
   displayedColumns: string[] = ['Name', 'ID', 'Number', 'Status'];
   results: any;
-
+  chek: boolean = false;
   constructor(
     private testService: TestService,
     private dialog: MatDialog,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) { }
 
   setCurrentTest(test: TestModel) {
@@ -129,9 +132,28 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.searchBook();
-    this.testService.get('tests').subscribe((data: any) => {
-      this.results = data
+    this.testService.get('test').then((data: firestore.QuerySnapshot) => {
+      data.forEach(
+        element => {
+          let res = element.data() as TestModel;
+          element.ref.collection('questions').get().then(data => {
+            let questions: Questions[] = [];
+            data.forEach(el => {
+              questions.push(el.data() as Questions)
+            })
+            res.questions = questions;
+            const _data = [res];
+            this.results = _data
+            this.chek = !this.chek;
+          })
+        }
+      )
     });
+  }
+
+  seeTestDetails(id) {
+    this.router.navigateByUrl(`test-details/${id}`)
+
   }
 
   openBottomSheet(): void {
@@ -140,7 +162,7 @@ export class AdminComponent implements OnInit {
       width: "80%"
     });
     dialog.afterClosed().subscribe(result => {
-      this.testService.get('tests').subscribe((data: any) => {
+      this.testService.get('tests').then((data: any) => {
         this.results = data
       });
     })

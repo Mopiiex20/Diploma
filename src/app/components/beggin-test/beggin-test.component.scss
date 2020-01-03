@@ -16,6 +16,7 @@
 }
 .questions{
     margin-bottom: 20px;
+    font-family: 'Times New Roman', Times, serif !important;
 }
 .title{
     font-size: 2em;
@@ -26,6 +27,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    font-family: 'Times New Roman', Times, serif !important;
     padding: 10px 5%;
     font-size: 1em;
     @media(min-width: 600px) {
@@ -36,9 +38,15 @@
     font-size: 1em;
     width: 25%;
     padding: 5px;
+    font-family: 'Times New Roman', Times, serif !important;
+    font-style: italic;
 }
 .questionTitle{
     font-size: 1.5em;
+    font-style: italic;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
 
 }
 .end-test{

@@ -1,0 +1,10 @@
+<div *ngIf='users.length == 0;else showdata'>
+<div>Немає записів за цим тестом</div>
+</div>
+<ng-template #showdata>
+    <div class="title">Список студентів здавших цей тест</div>
+   <div *ngFor='let user of users'>
+       <span>{{user.name}} з оцінкою {{user.mark}}%</span>
+       <mat-divider></mat-divider>
+   </div>
+</ng-template>

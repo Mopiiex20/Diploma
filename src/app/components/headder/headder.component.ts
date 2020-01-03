@@ -50,10 +50,8 @@ export class HeadderComponent implements OnInit {
           if (this.authService.isAdmin()) {
             this.admin = true
           }
-          const decoded = this.jwtHelper.decodeToken(data.token);
           this.check = true;
-          this.avatar = `url("${data.avatar}")`;
-          this.loginWelcome = `Доброго дня - ${decoded.firstName} !`;
+          this.loginWelcome = `Доброго дня - ${data.user.firstName} !`;
         } else {
           this.check = false;
         }
@@ -78,7 +76,7 @@ export class HeadderComponent implements OnInit {
     if (token) {
       const decoded = this.jwtHelper.decodeToken(token);
       this.authService.getAvatar('getAvatar', { id: decoded.id }).subscribe(data => {
-        this.loginService.loginToHeader({ token: token, avatar: data.avatar })
+        // this.loginService.loginToHeader({ token: token, avatar: data.avatar })
         if (this.authService.isAdmin()) {
           this.admin = true
         }

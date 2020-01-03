@@ -31,6 +31,8 @@ import { MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { CountdownModule } from 'ngx-countdown';
 import { UsersComponent } from './components/users/users.component';
 import { PassedTestComponent } from './components/passed-test/passed-test.component';
+import { MathJaxModule } from 'ngx-mathjax';
+import { TestDetails } from './components/test-details/test-details.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -47,6 +49,7 @@ export function tokenGetter() {
     RegisterComponent,
     ProfileComponent,
     UsersComponent,
+    TestDetails,
     BegginTestComponent,
     PassedTestComponent,
     PopUp,
@@ -60,6 +63,11 @@ export function tokenGetter() {
     BrowserModule,
     FormsModule,
     CountdownModule,
+    MathJaxModule.forRoot({
+      version: '2.7.5',
+      config: 'TeX-AMS_HTML',
+      hostname: 'cdnjs.cloudflare.com',
+    }),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

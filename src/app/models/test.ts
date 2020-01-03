@@ -13,5 +13,5 @@ export interface TestModel {
 
 export interface AnswersWithTest {
     answers: object;
-    test: TestModel
+    test: Questions[]
 }
