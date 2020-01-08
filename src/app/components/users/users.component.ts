@@ -27,11 +27,11 @@ export class UsersComponent implements OnInit {
       this.userService.delete(`${el.id.toString()}`).subscribe(
         data => {
           if (data.success) {
-            this.userService.get('get-all').subscribe((data) => {
-              this.dataSource = new MatTableDataSource<UserModel>(data);
-              this.dataSource.sort = this.sort;
-              this.selection.clear()
-            });
+            // this.userService.get('get-all').subscribe((data) => {
+            //   this.dataSource = new MatTableDataSource<UserModel>(data);
+            //   this.dataSource.sort = this.sort;
+            //   this.selection.clear()
+            // });
           }
         }
       )
@@ -68,9 +68,9 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userService.get('get-all').subscribe((data) => {
-      this.dataSource = new MatTableDataSource<UserModel>(data);
-      this.dataSource.sort = this.sort;
-    });
+    // this.userService.get('get-all').subscribe((data) => {
+    //   this.dataSource = new MatTableDataSource<UserModel>(data);
+    //   this.dataSource.sort = this.sort;
+    // });
   }
 }

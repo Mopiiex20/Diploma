@@ -23,9 +23,8 @@ export default class AuthService {
     }
 
     private getUserFromStorage(): UserModel {
-        const token = localStorage.getItem('token');
-
-        const userData = this.jwtHelper.decodeToken(token);
+        const token = localStorage.getItem('user');
+        const userData = JSON.parse(token);
         return !userData ? null : userData;
     }
 
@@ -47,7 +46,6 @@ export default class AuthService {
         return this.currentUserSubject.value;
     }
 
-
     public set user(authData: UserModel) {
         this.currentUserSubject.next(authData);
     }
@@ -61,6 +59,7 @@ export default class AuthService {
                             us => {
                                 if (us.data().password === password) {
                                     this.user = us.data() as UserModel;
+                                    localStorage.setItem('user', JSON.stringify(us.data()))
                                     resolve(true)
                                 } else {
                                     resolve(false)

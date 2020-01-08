@@ -30,25 +30,7 @@ export class TestDetails implements OnInit {
   ngOnInit() {
     this.router.params.subscribe(data => {
       let id = data.id;
-      this.usersService.get(`test-details/${id}`).subscribe(
-        data => {
-          data.forEach(element => {
-            element.passedTests.forEach(
-              test => {
-                if (test.id == id) {
-                  this.users.push({
-                    name: element.firstName,
-                    mark: test.mark
-                  })
-                }
-              }
-            )
-
-          });
-
-
-        }
-      )
+     
 
 
     })

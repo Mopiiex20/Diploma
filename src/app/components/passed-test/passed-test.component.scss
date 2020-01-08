@@ -1,0 +1,24 @@
+.ready-container {
+  background-color: #f7f7f7;
+  height: 25%;
+  width: 50%;
+  margin: auto;
+  border-radius: 5px;
+}
+
+.image-success {
+  width: 25%;
+  margin: auto;
+  background-image: url("../../../assets/shared/images/check.png");
+}
+
+.text-success {
+  display: block;
+  text-align: center;
+}
+.mark {
+  display: block;
+  text-align: center;
+  font-size: 3em;
+  color: rgb(255, 197, 38);
+}

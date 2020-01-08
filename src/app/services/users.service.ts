@@ -9,12 +9,18 @@ export class UserService {
     providedIn: 'root'
     constructor(private http: HttpClient) { }
 
-    get(url?: string): Observable<any> {
-        return this.http.get<any>(`${environment.url}users/${url}`)
+    get(id: string) {
+       return Firebase.firestore().collection('users').doc(id).get()
     }
 
     post(url: string, body: any) {
         Firebase.firestore().collection('users').add(body)
+    }
+
+    async postAvatar(id: string, body: any) {
+        const avatar = await (await Firebase.storage().ref(`avatars/${body.file.name}`).putString(body.avatar, 'data_url')).ref.getDownloadURL();
+        Firebase.firestore().collection('users').doc(id).update({ avatar: avatar });
+        return avatar
     }
 
     update(id: string, body: any) {

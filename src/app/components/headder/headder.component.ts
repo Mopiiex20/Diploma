@@ -9,6 +9,8 @@ import { Subscription } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import TestService from 'src/app/services/tests.service';
+import '../../../assets/shared/images/bg-image.png'
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-headder',
@@ -20,7 +22,7 @@ export class HeadderComponent implements OnInit {
   @ViewChild(MatMenuTrigger, { static: false }) trigger: MatMenuTrigger;
 
   loginWelcome: string;
-  avatar: string;
+  avatar: any = " url('../../../assets/shared/images/bg-image.png')"
   token: string;
   cartBadge: number;
   public isTestStarted: boolean;
@@ -52,6 +54,7 @@ export class HeadderComponent implements OnInit {
           }
           this.check = true;
           this.loginWelcome = `Доброго дня - ${data.user.firstName} !`;
+
         } else {
           this.check = false;
         }
@@ -63,6 +66,7 @@ export class HeadderComponent implements OnInit {
   }
 
   logout() {
+    this.authService.user = undefined;
     this.trigger.openMenu();
     localStorage.clear();
     this.avatar = ``;
@@ -72,15 +76,12 @@ export class HeadderComponent implements OnInit {
   }
 
   ngOnInit() {
-    const token = this.authService.getToken()
-    if (token) {
-      const decoded = this.jwtHelper.decodeToken(token);
-      this.authService.getAvatar('getAvatar', { id: decoded.id }).subscribe(data => {
-        // this.loginService.loginToHeader({ token: token, avatar: data.avatar })
-        if (this.authService.isAdmin()) {
-          this.admin = true
-        }
-      })
+    if (this.authService.user) {
+      this.loginWelcome = `Доброго дня - ${this.authService.user.firstName} !`;
+      this.check = true
+      if (this.authService.user.role === 'admin') {
+        this.admin = true
+      }
     }
   }
 }

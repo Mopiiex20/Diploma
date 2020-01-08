@@ -3,6 +3,7 @@ import AuthService from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../services/users.service';
 import { UserModel } from 'src/app/models';
+import { getBase64 } from '../../../assets/shared/helpers';
 
 @Component({
   selector: 'app-profile',
@@ -12,40 +13,28 @@ import { UserModel } from 'src/app/models';
 export class ProfileComponent implements OnInit, OnDestroy {
 
   public user: UserModel;
-  public loading: boolean = true;
+  public loading: boolean = false;
   subscription: Subscription;
   avatar: string;
 
   constructor(private authService: AuthService, private userService: UserService) {
   }
 
-  toBase64 = (file: any) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
   async UploadAvatar() {
     let path: any = document.querySelector("#text-button-file") as HTMLElement;
     if (path.value !== "") {
-      await this.toBase64(path.files[0]).then((json: string) => this.avatar = json);
+      await getBase64(path.files[0]).then((json: string) => this.avatar = json);
       path.value = "";
       const body = {
+        file: path.files[0],
         avatar: this.avatar
       }
-      this.userService.update('users/1', body)
+      this.userService.postAvatar(this.authService.user.id, body)
     } else { alert("Please pick some picture to upload") }
   }
 
   ngOnInit() {
-    this.authService.get('users/currentUser').subscribe((res: any) => {
-      this.user = res.user;
-      this.loading = false
-      this.authService.getAvatar('getAvatar', { id: res.user.id }).subscribe(data => {
-        this.avatar = data.avatar;
-      })
-    }
-    );
+    this.user = this.authService.user
   }
 
   ngOnDestroy() {

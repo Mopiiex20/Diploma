@@ -1,54 +1,54 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 .example-radio-button {
-    margin: 5px;
+  margin: 5px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 20px;
+  border: 1px solid seagreen;
+  border-radius: 5px;
+  font-size: 20px;
+  word-break: break-all;
+  background: aliceblue;
+  @media (max-width: 600px) {
+    font-size: 12px;
   }
-.container{
-    display: flex;
-    flex-direction: column;
-    padding: 15px 20px;
-    border: 1px solid seagreen;
-    border-radius: 5px;
-    font-size: 20px;
-    word-break: break-all;
-    @media(max-width: 600px) {
-        font-size: 12px;
-      }
 }
-.questions{
-    margin-bottom: 20px;
-    font-family: 'Times New Roman', Times, serif !important;
+.questions {
+  margin-bottom: 20px;
+  font-family: "Times New Roman", Times, serif !important;
 }
-.title{
-    font-size: 2em;
-    align-self: center;
+.title {
+  font-size: 2em;
+  align-self: center;
 }
 
-.answers{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-family: 'Times New Roman', Times, serif !important;
-    padding: 10px 5%;
-    font-size: 1em;
-    @media(min-width: 600px) {
-        flex-direction: row;
-      }
+.answers {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: "Times New Roman", Times, serif !important;
+  padding: 10px 5%;
+  font-size: 1em;
+  @media (min-width: 600px) {
+    flex-direction: row;
+  }
 }
-.radio{
-    font-size: 1em;
-    width: 25%;
-    padding: 5px;
-    font-family: 'Times New Roman', Times, serif !important;
-    font-style: italic;
+.radio {
+  font-size: 1em;
+  width: 25%;
+  padding: 5px;
+  font-family: "Times New Roman", Times, serif !important;
+  font-style: italic;
 }
-.questionTitle{
-    font-size: 1.5em;
-    font-style: italic;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-
+.questionTitle {
+  font-size: 1.5em;
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 }
-.end-test{
-    background-color: rgba(170, 174, 219, 0.507);
+.end-test {
+  background-color: rgba(170, 174, 219, 0.507);
 }

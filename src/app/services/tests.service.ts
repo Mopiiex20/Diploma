@@ -66,6 +66,24 @@ export default class TestService {
         }
     }
 
+    updateTest(data) {
+        Firebase.firestore().collection('test').doc(data.id).update({ isCurrentlyDoing: data.isCurrentlyDoing });
+    }
+
+    addNewTest(data: any, questions: any[]) {
+        Firebase.firestore().collection('test').add(data).then(
+            res => {
+                let id = res.id;
+                questions.forEach(
+                    doc => {
+                        Firebase.firestore().collection('test').doc(id).collection('questions').add(doc)
+                    }
+                )
+                Firebase.firestore().collection('test').doc(id).update({ id: id })
+            }
+        )
+    }
+
     post(url: string, body: object): Observable<any> {
         return this.http.post<any>(`${this.apiUrl}${url}`, body)
     }

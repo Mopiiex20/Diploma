@@ -4,5 +4,7 @@ export interface UserModel {
     username: string;
     firstName: string;
     userGroup?: string;
-    role?: string
+    role?: string;
+    passedTests?: any[]
+
 }

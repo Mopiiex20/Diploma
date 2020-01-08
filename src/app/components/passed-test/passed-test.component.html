@@ -2,5 +2,14 @@
   {{errorMessage}}
 </div>
 <ng-template #success>
-  Ви набрали {{persantage}} % правильних відповідей!
+  <div class="ready-container">
+    <div class="image-success">
+      <img src="../../../assets/shared/images/check.png" style='width:100%;' alt="1">
+    </div>
+    <span class="text-success">
+      Ви успішно склали тест з оцінкою :
+    </span>
+    <span class="mark">{{persantage}}</span>
+  </div>
+
 </ng-template>

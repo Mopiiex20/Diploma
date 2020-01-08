@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, AfterViewInit } from '@angular/core';
 import TestService from '../../services/tests.service';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { debounceTime, switchMap } from 'rxjs/operators';
@@ -51,15 +51,13 @@ export class PopUp implements OnInit, DoCheck {
       })
     }
 
-    let tests = this.AddTestForm.value
+    let tests = this.AddTestForm.value;
     let body: TestModel = {
       duration: duration,
       title: tests.title,
       isCurrentlyDoing: false
     }
-    body.questions = arrQuestions;
-    this.testService.post('tests', body).subscribe((data: any) => {
-    });
+    this.testService.addNewTest(body, arrQuestions)
     this.dialog.closeAll()
   }
 
@@ -102,7 +100,7 @@ export class PopUp implements OnInit, DoCheck {
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, AfterViewInit {
 
   testTitle = new FormControl();
   testsForm: FormGroup = this.formBuilder.group({
@@ -110,8 +108,9 @@ export class AdminComponent implements OnInit {
   })
 
   displayedColumns: string[] = ['Name', 'ID', 'Number', 'Status'];
-  results: any;
-  chek: boolean = false;
+  results: any[] = [];
+  loading: boolean = false;
+
   constructor(
     private testService: TestService,
     private dialog: MatDialog,
@@ -126,12 +125,11 @@ export class AdminComponent implements OnInit {
     } else {
       body.isCurrentlyDoing = true;
     }
-    this.testService.post('tests/currentTask', body).subscribe((data: any) => {
-    });
+    this.testService.updateTest(body);
   }
 
   ngOnInit() {
-    this.searchBook();
+    this.loading = true;
     this.testService.get('test').then((data: firestore.QuerySnapshot) => {
       data.forEach(
         element => {
@@ -142,13 +140,22 @@ export class AdminComponent implements OnInit {
               questions.push(el.data() as Questions)
             })
             res.questions = questions;
-            const _data = [res];
-            this.results = _data
-            this.chek = !this.chek;
+            const _data = res;
+            this.results.push(_data);
+            if (this.results.length === data.size) {
+              setTimeout(() => {
+
+                this.loading = false
+              }, 1)
+            }
           })
         }
       )
+
     });
+  }
+
+  ngAfterViewInit() {
   }
 
   seeTestDetails(id) {

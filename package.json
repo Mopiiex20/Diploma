@@ -22,6 +22,8 @@
     "@angular/platform-browser-dynamic": "~8.1.3",
     "@angular/router": "~8.1.3",
     "@auth0/angular-jwt": "^3.0.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "buffer": "^5.4.2",
     "firebase": "^7.6.1",
     "hammerjs": "^2.0.8",

@@ -48,7 +48,7 @@ export class BegginTestComponent implements OnInit {
 
   endTest() {
     let answersR: Questions[] = [];
-    this.testsService.get('tests', this.testId).then((snapshot: firestore.DocumentSnapshot) => {
+    this.testsService.get('test', this.testId).then((snapshot: firestore.DocumentSnapshot) => {
       snapshot.ref.collection('questions').get().then(_snap => {
         _snap.forEach(el => {
           answersR.push(el.data() as Questions);
@@ -58,10 +58,12 @@ export class BegginTestComponent implements OnInit {
           test: answersR
         }
         let persantage = this.testsService.getRigthAnswers(data);
-        this.userService.update('0INV1oOxCs675jTpqQ7B', { passedTests: { persantage, id: this.results.id } })
+        let passedTests = []
+        passedTests.push({ persantage, id: this.results.id })
+
+        this.userService.update(this.authService.user.id, { passedTests: passedTests })
         this.testsService.endTest();
         this.router.navigate(['/passed-test'], { queryParams: { testId: this.results.id, userId: this.authService.user.id } });
-        
         this.testsService.endTest();
 
       })
@@ -70,7 +72,6 @@ export class BegginTestComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.testId);
     this.testsService.get('test').then((data: firestore.QuerySnapshot) => {
       data.forEach(
         element => {

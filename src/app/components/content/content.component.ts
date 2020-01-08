@@ -36,8 +36,10 @@ export class ContentComponent implements OnInit {
               questions.push(el.data() as Questions)
             })
             res.questions = questions;
-            this.results.push(res);
-            this.isTestAvalible = true;
+            if (res.isCurrentlyDoing) {
+              this.results.push(res);
+              this.isTestAvalible = true;
+            }
           })
         }
       )

@@ -21,11 +21,11 @@ const routes: Routes = [
   { path: 'signup', component: RegisterComponent },
   { path: 'passed-test', component: PassedTestComponent },
   { path: '', component: LoginComponent },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'profile',
+  //   component: ProfileComponent,
+  //   canActivate: [AuthGuard]
+  // },
   {
     path: 'admin', component: AdminComponent,
     canActivate: [AdminGuard]
