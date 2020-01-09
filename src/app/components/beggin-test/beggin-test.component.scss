@@ -64,6 +64,12 @@
   background-color: rgba(170, 174, 219, 0.507);
 }
 
-.steps {
-  
+::ng-deep {
+  .mat-horizontal-stepper-header-container {
+   display: none !important;
+  }
+}
+
+.nav-but {
+  text-align: center;
 }

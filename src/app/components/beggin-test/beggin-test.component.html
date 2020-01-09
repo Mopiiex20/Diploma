@@ -6,9 +6,9 @@
     <button mat-raised-button (click)='closeTest()'>Вийти</button>
   </div>
   <div class="container">
-    <mat-horizontal-stepper class="steps">
+    <span class="title">Назва : {{results.title}}</span>
+    <mat-horizontal-stepper class="steps"  #stepper>
       <mat-step *ngFor="let item of results.questions ; let i = index;">
-        <span class="title">Назва : {{results.title}}</span>
         <div class="questions">
           <mat-label class="questionTitle">Питання {{i+1}} :<div mathjax [innerHTML]="item.title"></div>
           </mat-label>
@@ -19,9 +19,9 @@
             </mat-radio-button>
           </mat-radio-group>
         </div>
-        <div>
-          <button mat-button matStepperNext>Next</button>
-          <button *ngIf='i !== 0' mat-button matStepperPrevious>Back</button>
+        <div class="nav-but">
+          <button mat-button matStepperNext>Наступне</button>
+          <button *ngIf='i !== 0' mat-button matStepperPrevious>Попереднє</button>
         </div>
       </mat-step>
     </mat-horizontal-stepper>
