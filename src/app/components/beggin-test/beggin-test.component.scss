@@ -2,6 +2,13 @@
 .example-radio-button {
   margin: 5px;
 }
+
+.time-close-container {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .container {
   display: flex;
   flex-direction: column;
@@ -41,6 +48,9 @@
   padding: 5px;
   font-family: "Times New Roman", Times, serif !important;
   font-style: italic;
+  @media (min-width: 600px) {
+    width: 100%;
+  }
 }
 .questionTitle {
   font-size: 1.5em;
@@ -49,6 +59,11 @@
   flex-direction: column;
   text-align: center;
 }
+
 .end-test {
   background-color: rgba(170, 174, 219, 0.507);
+}
+
+.steps {
+  
 }

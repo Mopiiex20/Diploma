@@ -1,6 +1,18 @@
 $bg_col: yellow;
 $bg_col1: red;
 
+.menu-title {
+  color: red($color: #000000);
+  cursor: pointer;
+  align-self: center;
+  width: 6vw;
+  &:hover { 
+    color:  rgba(224, 13, 13, 0.82);
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+}
+
 .example-form {
   min-width: 150px;
   max-width: 500px;

@@ -46,6 +46,10 @@ export class BegginTestComponent implements OnInit {
     });
   }
 
+  closeTest() {
+    this.testsService.endTest();
+  }
+
   endTest() {
     let answersR: Questions[] = [];
     this.testsService.get('test', this.testId).then((snapshot: firestore.DocumentSnapshot) => {
@@ -60,18 +64,16 @@ export class BegginTestComponent implements OnInit {
         let persantage = this.testsService.getRigthAnswers(data);
         let passedTests = []
         passedTests.push({ persantage, id: this.results.id })
-
         this.userService.update(this.authService.user.id, { passedTests: passedTests })
         this.testsService.endTest();
         this.router.navigate(['/passed-test'], { queryParams: { testId: this.results.id, userId: this.authService.user.id } });
-        this.testsService.endTest();
-
       })
     });
 
   }
 
   ngOnInit() {
+    this.loading = true;
     this.testsService.get('test').then((data: firestore.QuerySnapshot) => {
       data.forEach(
         element => {

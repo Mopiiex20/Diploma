@@ -12,9 +12,9 @@ import { firestore } from 'firebase'
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, OnDestroy {
 
-  public subscription: Subscription;
+  public subscription: Subscription[] = [];
   public results: TestModel[] = [];
   public isTestAvalible: boolean = false;
   public testStart: boolean = false;
@@ -44,6 +44,16 @@ export class ContentComponent implements OnInit {
         }
       )
     });
+
+    let sub = this.testsService.start$.subscribe(data => {
+      this.testStart = data;
+    })
+    this.subscription.push(sub)
+  }
+  ngOnDestroy() {
+    this.subscription.forEach(
+      sub => sub.unsubscribe()
+    )
   }
 
   ngOnInit() {
@@ -60,8 +70,10 @@ export class ContentComponent implements OnInit {
               questions.push(el.data() as Questions)
             })
             res.questions = questions;
-            this.results.push(res);
-            this.isTestAvalible = true;
+            if (res.isCurrentlyDoing) {
+              this.results.push(res);
+              this.isTestAvalible = true;
+            }
           })
         }
       )

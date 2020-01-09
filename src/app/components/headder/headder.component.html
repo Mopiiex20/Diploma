@@ -4,10 +4,8 @@
             <mat-icon style='color:rgba(224, 13, 13, 0.82)' aria-hidden="false">home</mat-icon>
         </a>
         <span class="welcome">{{loginWelcome}}</span>
-        <div *ngIf="check ; else login" style="display: flex; flex-direction: row">
-            <div mat-card-avatar class="example-header-image" [matMenuTriggerFor]="beforeMenu"
-                [ngStyle]="{'background-image': avatar}">
-            </div>
+        <div *ngIf="check ; else login" class="mat-h3 menu-title" [matMenuTriggerFor]="beforeMenu">
+                МЕНЮ
         </div>
         <ng-template #login>
             <a mat-button routerLink="/" class="button">

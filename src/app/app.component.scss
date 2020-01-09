@@ -1,5 +1,3 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
-
 $bg_col: rgb(255, 210, 88);
 
 .headder {
@@ -8,7 +6,7 @@ $bg_col: rgb(255, 210, 88);
 }
 
 .mainContainer {
-  background-image: url("../assets/shared/images/bg.jpg");
+  
   /* Full height */
   height: 90.5%;
   overflow: auto;
