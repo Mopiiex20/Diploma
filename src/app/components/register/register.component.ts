@@ -32,20 +32,20 @@ export class RegisterComponent implements OnInit {
   registerNewUser() {
     const form = this.RegisterForm.value;
 
-    this.authService.post('users/signup', form).subscribe(
-      (data: any) => {
-        const loginData = {
-          email: form.email,
-          password: form.password
-        }
-        this.loginService.registerToLogin(loginData)
-        this.router.navigateByUrl("/");
-      },
-      (error: any) => {
-        this._snackBar.open(error.error.message);
-      }
+    // this.authService.post('users/signup', form).subscribe(
+    //   (data: any) => {
+    //     const loginData = {
+    //       email: form.email,
+    //       password: form.password
+    //     }
+    //     this.loginService.registerToLogin(loginData)
+    //     this.router.navigateByUrl("/");
+    //   },
+    //   (error: any) => {
+    //     this._snackBar.open(error.error.message);
+    //   }
 
-    );
+    // );
   }
   ngOnInit() {
     this.groups = Object.values(GroupList);

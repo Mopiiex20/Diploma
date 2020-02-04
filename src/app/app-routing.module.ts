@@ -14,6 +14,7 @@ import { LoginComponent } from './components/login/login.component';
 import { BegginTestComponent } from './components/beggin-test/beggin-test.component';
 import { UsersComponent } from './components/users/users.component';
 import { PassedTestComponent } from './components/passed-test/passed-test.component';
+import { TestDetails } from './components/test-details/test-details.component';
 
 const routes: Routes = [
   { path: 'home', component: ContentComponent },
@@ -31,6 +32,10 @@ const routes: Routes = [
   },
   {
     path: 'users', component: UsersComponent,
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'test-details/:id', component: TestDetails,
     canActivate: [AdminGuard]
   },
   { path: '**', redirectTo: '' }

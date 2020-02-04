@@ -4,13 +4,29 @@ import { Observable, of, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { TestModel, AnswersWithTest, Questions } from '../models/test';
+import * as Firebase from 'firebase';
+import { firestore } from 'firebase'
 
 @Injectable({
     providedIn: 'root'
 })
 export default class TestService {
-    bookUrl = environment.url;
-    constructor(private http: HttpClient) { }
+    apiUrl = environment.url;
+    constructor(
+        private http: HttpClient,
+    ) {
+        let firebaseConfig = {
+            apiKey: "AIzaSyALIPOgmPPTkWE4z7BcauoLKWlsroaGMRE",
+            authDomain: "test-a1f9d.firebaseapp.com",
+            databaseURL: "https://test-a1f9d.firebaseio.com",
+            projectId: "test-a1f9d",
+            storageBucket: "test-a1f9d.appspot.com",
+            messagingSenderId: "663598801402",
+            appId: "1:663598801402:web:ef618771c12051cf8f0443"
+        };
+        // Initialize Firebase
+        Firebase.initializeApp(firebaseConfig);
+    }
 
     // Observable string sources
     private answersSource = new Subject<object>();
@@ -32,28 +48,30 @@ export default class TestService {
 
     getRigthAnswers(data: AnswersWithTest): number {
         let counter: number = 0;
-        data.test.questions.forEach(
+        data.test.forEach(
             (element: Questions, index: number) => {
                 if (data.answers[`q${index}`] == element.answers[0]) {
                     counter++
                 }
             }
         )
-        return (Math.floor((counter / data.test.questions.length) * 100))
+        return (Math.floor((counter / data.test.length) * 100))
     }
 
-
-
-    get(url: string): Observable<any> {
-        return this.http.get<any>(`${this.bookUrl}${url}`)
+    get(collection: string, doc?: string): Promise<any> {
+        if (!doc) {
+            return Firebase.firestore().collection(collection).get();
+        } else {
+            return Firebase.firestore().collection(collection).doc(doc).get();
+        }
     }
 
     post(url: string, body: object): Observable<any> {
-        return this.http.post<any>(`${this.bookUrl}${url}`, body)
+        return this.http.post<any>(`${this.apiUrl}${url}`, body)
     }
 
     searchBook(title: string): Observable<any> {
-        return this.http.get<any>(this.bookUrl + 'tests/' + title).pipe(
+        return this.http.get<any>(this.apiUrl + 'tests/' + title).pipe(
             catchError(err => of(null))
         );
     }

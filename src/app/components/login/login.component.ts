@@ -40,21 +40,27 @@ export class LoginComponent implements OnInit {
     password: new FormControl(''),
   });
 
-  onSubmit() {
+  async onSubmit() {
     const body = this.logInForm.value;
-    this.authService.post('login', body).subscribe(
-      (data: any) => {
-        this.token = data.token;
-        let avatar: string = data.avatar;
-        localStorage.setItem('token', this.token);
-        this.loginService.loginToHeader({ token: this.token, avatar: avatar })
-        this.router.navigateByUrl('home')
-      },
-      (error: any) => {
-        console.log(error);
-        
-        this._snackBar.open(error.error.message || error.error.error);
-      })
+    const res = await this.authService.auth(body.username, body.password);
+    if (res) {
+      this.loginService.loginToHeader({ user: this.authService.user, avatar: '' })
+      this.router.navigateByUrl('home');
+    } else {
+      this._snackBar.open('Невірна авторизація');
+    }
+    //   (data: any) => {
+    //     this.token = data.token;
+    //     let avatar: string = data.avatar;
+    //     localStorage.setItem('token', this.token);
+    //     this.loginService.loginToHeader({ token: this.token, avatar: avatar })
+    //    
+    //   },
+    //   (error: any) => {
+    //     console.log(error);
+
+    //     
+    //   })
   }
 
   ngOnInit() {

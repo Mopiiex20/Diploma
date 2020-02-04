@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const body = {
         avatar: this.avatar
       }
-      this.userService.put('users/1', body).subscribe()
+      this.userService.update('users/1', body)
     } else { alert("Please pick some picture to upload") }
   }
 

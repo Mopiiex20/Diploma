@@ -1,35 +1,77 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { UserModel } from '../models';
+import * as Firebase from 'firebase'
 
 @Injectable()
 export default class AuthService {
     providedIn: 'root'
     stUrl = environment.url;
-    constructor(private http: HttpClient, public jwtHelper: JwtHelperService) { }
 
-    public isAuthenticated(): boolean {
-        const token = localStorage.getItem('token');
-        // Check whether the token is expired and return
-        // true or false
-        return !this.jwtHelper.isTokenExpired(token);
+    private currentUserSubject: BehaviorSubject<UserModel>;
+
+    constructor(
+        private http: HttpClient,
+        public jwtHelper: JwtHelperService,
+
+    ) {
+        const authData = this.getUserFromStorage();
+        this.currentUserSubject = new BehaviorSubject<any>(authData);
     }
 
-    public isAdmin(): boolean {
+    private getUserFromStorage(): UserModel {
         const token = localStorage.getItem('token');
-        let decoded = this.jwtHelper.decodeToken(token);
-        let permissions = decoded.permissions;
-        let isAdministrator = permissions.find((per: string) => per == 'userAdmin')
-        if (isAdministrator) {
+
+        const userData = this.jwtHelper.decodeToken(token);
+        return !userData ? null : userData;
+    }
+
+    public isAuthenticated(): boolean {
+        if (this.user) {
             return true
         }
         return false;
     }
 
-    post(url: string, body: any): Observable<any> {
-        return this.http.post<any>(`${this.stUrl}${url}`, body)
+    public isAdmin(): boolean {
+        if (this.user.role == 'admin') {
+            return true
+        }
+        return false;
+    }
+
+    public get user(): UserModel {
+        return this.currentUserSubject.value;
+    }
+
+
+    public set user(authData: UserModel) {
+        this.currentUserSubject.next(authData);
+    }
+
+    auth(email: string, password: string): Promise<any> {
+        return new Promise(
+            (resolve, reject) => {
+                Firebase.firestore().collection('users').where('username', '==', email).get().then(
+                    user => {
+                        user.forEach(
+                            us => {
+                                if (us.data().password === password) {
+                                    this.user = us.data() as UserModel;
+                                    resolve(true)
+                                } else {
+                                    resolve(false)
+                                }
+                            }
+                        )
+                    }
+                )
+            }
+        )
+
     }
 
     getAvatar(url: string, body: any): Observable<any> {
