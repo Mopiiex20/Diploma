@@ -1,13 +1,12 @@
-<div *ngIf='!loading'>
+<div *ngIf='!loading' class="questions-layout">
   <div class="time-close-container">
-    <span>
+    <span class="title">
       Залишилось часу :<countdown [config]="{leftTime: subscribeTimer}"></countdown>
     </span>
     <button mat-raised-button (click)='closeTest()'>Вийти</button>
   </div>
   <div class="container">
-    <span class="title">Назва : {{results.title}}</span>
-    <mat-horizontal-stepper class="steps"  #stepper>
+    <mat-horizontal-stepper class="steps" #stepper>
       <mat-step *ngFor="let item of results.questions ; let i = index;">
         <div class="questions">
           <mat-label class="questionTitle">Питання {{i+1}} :<div mathjax [innerHTML]="item.title"></div>
@@ -20,13 +19,12 @@
           </mat-radio-group>
         </div>
         <div class="nav-but">
-          <button mat-button matStepperNext>Наступне</button>
           <button *ngIf='i !== 0' mat-button matStepperPrevious>Попереднє</button>
+          <button *ngIf='i+1 !== results.questions.length' mat-button matStepperNext>Наступне</button>
+          <button *ngIf='i+1 === results.questions.length' mat-raised-button (click)='endTest()'
+            class="end-test">Завершити виконання</button>
         </div>
       </mat-step>
     </mat-horizontal-stepper>
-
-
-    <button mat-raised-button (click)='endTest()' class="end-test">Завершити виконання</button>
   </div>
 </div>

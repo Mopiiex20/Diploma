@@ -70,7 +70,6 @@ export default class AuthService {
                 )
             }
         )
-
     }
 
     getAvatar(url: string, body: any): Observable<any> {

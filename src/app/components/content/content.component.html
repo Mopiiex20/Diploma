@@ -3,18 +3,48 @@
         <app-beggin-test testId={{currentTestId}}></app-beggin-test>
     </ng-container>
     <ng-template #testInfo>
-        <div *ngFor='let item of results' class="test-container">
-            <div class="testOverview">
-                <span class="testTitle">
-                    Назва : {{item.title}}
-                </span>
-                Кількість питаннь : {{item.questions.length}}
-                <span>
-                    Тривалість тесту : {{item.duration}} хв.
-                </span>
-            </div>
-            <button mat-raised-button (click)='begginTest(item.id)' class="begginTest">Почати тест</button>
-        </div>
+        <mat-drawer-container class="example-container">
+            <mat-drawer #drawer class="drawer-left">
+                <div class="drawer-togle" (click)="toggleCloseSideNav('access')" aria-hidden="false">
+                    Доступні
+                </div>
+                <div class="drawer-togle" (click)="toggleCloseSideNav('done')" aria-hidden="false">
+                    Виконані
+                </div>
+            </mat-drawer>
+            <mat-drawer-content class="tests-overview">
+                <div *ngIf="sidenavContent == 'access'; else doneTests">
+                    <button class="drawer-togle-button" mat-raised-button (click)="drawer.toggle()" aria-hidden="false">
+                        <mat-icon>arrow_left</mat-icon>
+                        <span>
+                            Доступні
+                        </span>
+                    </button>
+                    <div *ngFor='let item of results' class="test-container">
+                        <div class="testOverview">
+                            <span class="testTitle">
+                                Назва : {{item.title}}
+                            </span>
+                            Кількість питаннь : {{item.questions.length}}
+                            <span>
+                                Тривалість тесту : {{item.duration}} хв.
+                            </span>
+                        </div>
+                        <button mat-raised-button (click)='begginTest(item.id)' class="begginTest">Почати тест</button>
+                    </div>
+                </div>
+                <ng-template #doneTests>
+                    <button class="drawer-togle-button" mat-raised-button (click)="drawer.toggle()" aria-hidden="false">
+                        <mat-icon>arrow_left</mat-icon>
+                        <span>
+                            Виконані
+                        </span>
+                    </button>
+                </ng-template>
+
+            </mat-drawer-content>
+        </mat-drawer-container>
+
     </ng-template>
 </ng-container>
 

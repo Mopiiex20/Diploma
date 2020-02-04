@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import TestService from '../../services/tests.service';
 import { TestModel, Questions } from '../../models/test'
 import { Router } from '@angular/router';
@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/users.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { firestore } from 'firebase'
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-content',
@@ -13,12 +14,14 @@ import { firestore } from 'firebase'
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit, OnDestroy {
+  @ViewChild('drawer', { static: false }) drawer: MatSidenav;
 
   public subscription: Subscription[] = [];
   public results: TestModel[] = [];
   public isTestAvalible: boolean = false;
   public testStart: boolean = false;
   public currentTestId: string;
+  public sidenavContent: 'access' | 'done' = 'access';
 
   constructor(
     private testsService: TestService,
@@ -57,6 +60,11 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+  }
+
+  toggleCloseSideNav = (mode: 'access' | 'done') => {
+    this.sidenavContent = mode;
+    this.drawer.close();
   }
 
   checkForTest(): void {

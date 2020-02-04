@@ -1,30 +1,25 @@
-<div>
-    <mat-card class="avatar-menu">
-        <a mat-button routerLink="/">
-            <mat-icon style='color:rgba(224, 13, 13, 0.82)' aria-hidden="false">home</mat-icon>
+<div class="header-layout">
+    <mat-icon class="menu-icon" aria-hidden="false" routerLink="/">home</mat-icon>
+    <div *ngIf="check ; else login" class="menu-icon" [matMenuTriggerFor]="beforeMenu">
+        <mat-icon>menu</mat-icon>
+        <mat-menu #beforeMenu="matMenu" xPosition="before">
+            <div *ngIf="!check">
+                <button mat-menu-item disabled=true>Увійдіть у систему</button>
+            </div>
+            <div *ngIf="admin">
+                <button mat-menu-item routerLink="/admin">Панель Керування</button>
+            </div>
+            <!-- <div *ngIf="check">
+                    <a mat-menu-item routerLink="/profile">Профіль</a>
+                </div> -->
+            <div *ngIf="check">
+                <button mat-menu-item routerLink="/" (click)="logout()">Завершити сессію</button>
+            </div>
+        </mat-menu>
+    </div>
+    <ng-template #login>
+        <a mat-button routerLink="/" class="button">
+            Авторизуватися
         </a>
-        <span class="welcome">{{loginWelcome}}</span>
-        <div *ngIf="check ; else login" class="mat-h3 menu-title" [matMenuTriggerFor]="beforeMenu">
-                МЕНЮ
-        </div>
-        <ng-template #login>
-            <a mat-button routerLink="/" class="button">
-                Авторизуватися
-            </a>
-        </ng-template>
-    </mat-card>
-    <mat-menu #beforeMenu="matMenu" xPosition="before">
-        <div *ngIf="!check">
-            <button mat-menu-item disabled=true>Увійдіть у систему</button>
-        </div>
-        <div *ngIf="admin">
-            <button mat-menu-item routerLink="/admin">Панель Керування</button>
-        </div>
-        <!-- <div *ngIf="check">
-                <a mat-menu-item routerLink="/profile">Профіль</a>
-            </div> -->
-        <div *ngIf="check">
-            <button mat-menu-item routerLink="/" (click)="logout()">Завершити сессію</button>
-        </div>
-    </mat-menu>
+    </ng-template>
 </div>

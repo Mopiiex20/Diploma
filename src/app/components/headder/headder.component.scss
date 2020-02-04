@@ -1,16 +1,21 @@
 $bg_col: yellow;
 $bg_col1: red;
 
-.menu-title {
-  color: red($color: #000000);
+.header-layout {
+  height: 3vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 5px;
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(187, 187, 187, 0.82);
+  box-shadow: 5px 5px 15px 5px rgba(187, 187, 187, 0.82);
+}
+
+.menu-icon {
+  color: #1791e2;
   cursor: pointer;
-  align-self: center;
   width: 6vw;
-  &:hover { 
-    color:  rgba(224, 13, 13, 0.82);
-    font-size: 1.1em;
-    font-weight: 600;
-  }
 }
 
 .example-form {
@@ -23,14 +28,8 @@ $bg_col1: red;
   width: 10%;
 }
 
-.padd {
-  padding: 10px;
-  font-size: 12px;
-  width: 15%;
-}
 .login-form {
   text-align: end;
-  background-color: $bg_col;
   display: flex;
 
   justify-content: space-between;
@@ -46,7 +45,6 @@ $bg_col1: red;
 .avatar-menu {
   display: flex;
   justify-content: space-between;
-  background-color: $bg_col;
 }
 
 .welcome {
