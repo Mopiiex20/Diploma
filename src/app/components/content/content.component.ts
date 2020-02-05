@@ -7,6 +7,8 @@ import { UserService } from 'src/app/services/users.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { firestore } from 'firebase'
 import { MatSidenav } from '@angular/material/sidenav';
+import AuthService from 'src/app/services/auth.service';
+import { UserModel } from '../../models';
 
 @Component({
   selector: 'app-content',
@@ -22,11 +24,13 @@ export class ContentComponent implements OnInit, OnDestroy {
   public testStart: boolean = false;
   public currentTestId: string;
   public sidenavContent: 'access' | 'done' = 'access';
+  public loggedUser: UserModel;
+  public passedTests: any[] = [];
 
   constructor(
     private testsService: TestService,
     private router: Router,
-    private userService: UserService,
+    private authService: AuthService,
     private _snackBar: MatSnackBar,
   ) {
     this.testsService.get('test').then((data: firestore.QuerySnapshot) => {
@@ -60,6 +64,21 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.testsService.getUserPassedTests().then(
+      snapshot => {
+        snapshot.forEach(el => {
+          el.forEach(
+            doc => {
+              const test = {
+                title: doc.data().title,
+                persantage: this.authService.user.passedTests.find(test => test.id == doc.data().id).persantage
+              }
+              this.passedTests.push(test);
+            }
+          )
+        })
+      }
+    )
   }
 
   toggleCloseSideNav = (mode: 'access' | 'done') => {

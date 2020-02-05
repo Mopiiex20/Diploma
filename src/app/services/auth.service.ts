@@ -72,6 +72,24 @@ export default class AuthService {
         )
     }
 
+
+    register(newUser: UserModel): Promise<any> {
+        return new Promise(
+            (resolve, reject) => {
+                let userToRegister = newUser;
+                Firebase.firestore().collection('users').add(newUser).then(
+                    user => {
+                        userToRegister.id = user.id;
+                        user.update(userToRegister);
+                        resolve(user.get());
+                    }
+                ).catch(error => {
+                    reject(error.message)
+                })
+            }
+        )
+    }
+
     getAvatar(url: string, body: any): Observable<any> {
         return this.http.post<any>(`${this.stUrl}${url}`, body)
     }

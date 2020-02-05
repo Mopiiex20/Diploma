@@ -40,6 +40,14 @@
                             Виконані
                         </span>
                     </button>
+
+                    <div *ngFor='let test of passedTests' class="done-tests">
+                        <div class="image-success">
+                            <img src="../../../assets/shared/images/check.png" style='width:50%;' alt="1">
+                        </div>
+                        <div class="done-title">{{test.title}}</div>
+                        <span class="mark">{{test.persantage}} балів</span>
+                    </div>
                 </ng-template>
 
             </mat-drawer-content>

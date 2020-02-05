@@ -53,8 +53,6 @@ export class HeadderComponent implements OnInit {
             this.admin = true
           }
           this.check = true;
-          this.loginWelcome = `Доброго дня - ${data.user.firstName} !`;
-
         } else {
           this.check = false;
         }
@@ -77,7 +75,6 @@ export class HeadderComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.user) {
-      this.loginWelcome = `Доброго дня - ${this.authService.user.firstName} !`;
       this.check = true
       if (this.authService.user.role === 'admin') {
         this.admin = true

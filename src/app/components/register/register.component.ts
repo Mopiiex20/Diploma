@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/common.servise';
 import { GroupList } from '../../../assets/shared/groupList.enum'
+import { UserModel } from 'src/app/models';
+import { FirebaseError } from 'firebase';
 
 @Component({
   selector: 'register',
@@ -31,6 +33,28 @@ export class RegisterComponent implements OnInit {
   });
   registerNewUser() {
     const form = this.RegisterForm.value;
+    const newUser: UserModel = {
+      email: form.email,
+      username: form.firstName,
+      password: form.password,
+      userGroup: form.userGroup,
+      role: 'student'
+    }
+    this.authService.register(newUser).then(
+      (user) => {
+        let userData = user.data()
+        debugger
+        const loginData = {
+          email: userData.email,
+          password: userData.password
+        }
+        this.loginService.registerToLogin(loginData)
+        this.router.navigateByUrl("/");
+      })
+      .catch(error => {
+        this._snackBar.open(error.error.message);
+      }
+      )
 
     // this.authService.post('users/signup', form).subscribe(
     //   (data: any) => {

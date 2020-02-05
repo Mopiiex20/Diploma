@@ -2,9 +2,13 @@ export interface UserModel {
     id?: string;
     email: string;
     username: string;
-    firstName: string;
+    password: string;
     userGroup?: string;
-    role?: string;
-    passedTests?: any[]
+    role?: 'student' | 'admin';
+    passedTests?: PassedTests[]
+}
 
+interface PassedTests {
+    id: string;
+    persantage: number
 }

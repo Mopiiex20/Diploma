@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { TestModel, AnswersWithTest, Questions } from '../models/test';
 import * as Firebase from 'firebase';
 import { firestore } from 'firebase'
+import AuthService from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,6 +15,7 @@ export default class TestService {
     apiUrl = environment.url;
     constructor(
         private http: HttpClient,
+        private authService: AuthService
     ) {
         let firebaseConfig = {
             apiKey: "AIzaSyALIPOgmPPTkWE4z7BcauoLKWlsroaGMRE",
@@ -68,6 +70,15 @@ export default class TestService {
 
     updateTest(data) {
         Firebase.firestore().collection('test').doc(data.id).update({ isCurrentlyDoing: data.isCurrentlyDoing });
+    }
+
+    getUserPassedTests() {
+        const testsPromises = this.authService.user.passedTests.map(el => {
+            return Firebase.firestore().collection('test').where("id", '==', el.id).get()
+        })
+        // Wait for all the async requests mapped into 
+        // the array to complete
+        return Promise.all(testsPromises)
     }
 
     addNewTest(data: any, questions: any[]) {
