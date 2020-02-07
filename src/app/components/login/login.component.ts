@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import AuthService from '../../services/auth.service';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { Router, RouterModule } from '@angular/router';
-import { LoginService } from '../../services/common.servise';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
+import { CommonService } from '../../../app/services/common.servise';
 
 @Component({
   selector: 'login',
@@ -20,8 +19,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     public jwtHelper: JwtHelperService,
-    private _snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private commonService: CommonService
+
   ) {
   }
 
@@ -32,12 +32,17 @@ export class LoginComponent implements OnInit {
 
   async onSubmit() {
     const body = this.logInForm.value;
-    const res = await this.authService.auth(body.username, body.password);
-    if (res) {
-      this.router.navigateByUrl('home');
-    } else {
-      this._snackBar.open('Невірна авторизація');
-    }
+    this.authService.login(body.username, body.password).subscribe(
+      data => {
+        this.authService.user = data.user;
+        localStorage.setItem('token', data.token)
+        this.router.navigateByUrl('home');
+      },
+      error => {
+        this.commonService.setError(error.error)
+      }
+    )
+
   }
 
   ngOnInit() {

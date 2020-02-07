@@ -17,15 +17,10 @@ import { PassedTestComponent } from './components/passed-test/passed-test.compon
 import { TestDetails } from './components/test-details/test-details.component';
 
 const routes: Routes = [
-  { path: 'home', component: ContentComponent },
+  { path: 'home', component: ContentComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: RegisterComponent },
   { path: 'passed-test', component: PassedTestComponent },
-  { path: '', component: LoginComponent },
-  // {
-  //   path: 'profile',
-  //   component: ProfileComponent,
-  //   canActivate: [AuthGuard]
-  // },
+  { path: 'login', component: LoginComponent },
   {
     path: 'admin', component: AdminComponent,
     canActivate: [AdminGuard]
@@ -38,7 +33,7 @@ const routes: Routes = [
     path: 'test-details/:id', component: TestDetails,
     canActivate: [AdminGuard]
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: 'home' }
 ];
 
 @NgModule({

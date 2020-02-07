@@ -3,14 +3,16 @@ import { Subject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import * as Firebase from 'firebase'
+import { UserModel } from '../models';
 
 @Injectable()
 export class UserService {
     providedIn: 'root'
     constructor(private http: HttpClient) { }
+    apiUrl = environment.url;
 
-    get(id: string) {
-       return Firebase.firestore().collection('users').doc(id).get()
+    get(): Observable<UserModel> {
+        return this.http.get<UserModel>(`${this.apiUrl}users`)
     }
 
     post(url: string, body: any) {

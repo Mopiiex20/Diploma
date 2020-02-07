@@ -3,10 +3,10 @@ import { FormGroup, FormControl } from '@angular/forms';
 import AuthService from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { LoginService } from '../../services/common.servise';
 import { GroupList } from '../../../assets/shared/groupList.enum'
-import { UserModel } from 'src/app/models';
-import { FirebaseError } from 'firebase';
+import { UserModel } from '../../../app/models';
+import { CommonService } from '../../../app/services/common.servise';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'register',
@@ -18,9 +18,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private _snackBar: MatSnackBar,
+    private commonService: CommonService,
     private router: Router,
-    private loginService: LoginService
   ) { }
   groups: any;
 
@@ -28,6 +27,7 @@ export class RegisterComponent implements OnInit {
     email: new FormControl(''),
     password: new FormControl(''),
     firstName: new FormControl(''),
+    lastName: new FormControl(''),
     userGroup: new FormControl('')
 
   });
@@ -35,42 +35,22 @@ export class RegisterComponent implements OnInit {
     const form = this.RegisterForm.value;
     const newUser: UserModel = {
       email: form.email,
-      username: form.firstName,
+      firstname: form.firstName,
+      lastname: form.lastName,
       password: form.password,
       userGroup: form.userGroup,
-      role: 'student'
     }
-    this.authService.register(newUser).then(
-      (user) => {
-        let userData = user.data()
-        debugger
-        const loginData = {
-          email: userData.email,
-          password: userData.password
-        }
-        this.loginService.registerToLogin(loginData)
+    this.authService.register(newUser).subscribe(
+      (res) => {
+        this.authService.user = res.user;
+        localStorage.setItem('token', res.token)
         this.router.navigateByUrl("/");
+      },
+      (errorResponse: HttpErrorResponse) => {
+        this.commonService.setError(errorResponse.error)
       })
-      .catch(error => {
-        this._snackBar.open(error.error.message);
-      }
-      )
-
-    // this.authService.post('users/signup', form).subscribe(
-    //   (data: any) => {
-    //     const loginData = {
-    //       email: form.email,
-    //       password: form.password
-    //     }
-    //     this.loginService.registerToLogin(loginData)
-    //     this.router.navigateByUrl("/");
-    //   },
-    //   (error: any) => {
-    //     this._snackBar.open(error.error.message);
-    //   }
-
-    // );
   }
+
   ngOnInit() {
     this.groups = Object.values(GroupList);
   }

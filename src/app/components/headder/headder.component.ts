@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { MatMenuTrigger } from '@angular/material/menu';
 import AuthService from '../../services/auth.service';
 
-import { LoginService, LoginData } from '../../services/common.servise';
+import { LoginData } from '../../services/common.servise';
 
 import { Subscription } from 'rxjs';
 import { JwtHelperService } from "@auth0/angular-jwt";
@@ -11,6 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import TestService from 'src/app/services/tests.service';
 import '../../../assets/shared/images/bg-image.png'
 import { TranslateService } from '@ngx-translate/core';
+import { UserType } from 'src/app/shared/enums';
+import { UserService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-headder',
@@ -40,26 +42,12 @@ export class HeadderComponent implements OnInit {
   });
 
   constructor(
-    private loginService: LoginService,
     private authService: AuthService,
     public jwtHelper: JwtHelperService,
-    private _snackBar: MatSnackBar,
     public testService: TestService
   ) {
-    this.subscription = this.loginService.login$.subscribe(
-      (data: LoginData) => {
-        if (data) {
-          if (this.authService.isAdmin()) {
-            this.admin = true
-          }
-          this.check = true;
-        } else {
-          this.check = false;
-        }
-      });
     this.subscription1 = this.testService.start$.subscribe(data => {
       this.isTestStarted = data;
-
     })
   }
 
@@ -74,9 +62,9 @@ export class HeadderComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.authService.user) {
-      this.check = true
-      if (this.authService.user.role === 'admin') {
+    if (localStorage.getItem('token')) {
+      this.check = true;
+      if (this.authService.user.userType === UserType.Admin) {
         this.admin = true
       }
     }

@@ -1,6 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
 import { Subject } from 'rxjs';
-import { UserInfo } from 'firebase';
 import { UserModel } from '../models';
 
 
@@ -18,19 +17,22 @@ export interface LoginData {
 @Injectable({
     providedIn: 'root'
 })
-export class LoginService {
+export class CommonService {
+
+    public httpError = new Subject<string>();
+
+    setError(errorMessage: string) {
+        this.httpError.next(errorMessage)
+    }
+
+
+
     // Observable string sources
-    private registerSource = new Subject<LoginRequest>();
     private loginSource = new Subject<LoginData>();
     // Observable string streams
-    register$ = this.registerSource.asObservable();
     login$ = this.loginSource.asObservable();
 
     loginToHeader(data: LoginData) {
         this.loginSource.next(data);
-    }
-
-    registerToLogin(loginData: any) {
-        this.registerSource.next(loginData);
     }
 }

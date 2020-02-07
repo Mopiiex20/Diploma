@@ -1,10 +1,13 @@
+import { UserType } from '../shared/enums';
+
 export interface UserModel {
     id?: string;
     email: string;
-    username: string;
+    firstname: string;
+    lastname: string;
     password: string;
     userGroup?: string;
-    role?: 'student' | 'admin';
+    userType?: UserType;
     passedTests?: PassedTests[]
 }
 

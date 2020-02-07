@@ -9,14 +9,13 @@ export class CustomHttpInterceptorService implements HttpInterceptor {
     constructor(private auth: AuthService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const token = localStorage.getItem('token')
         request = request.clone({
             setHeaders: {
-                Authorization: `Bearer ${this.auth.getToken()}`
+                'token': token ? token : '',
+                'Content-Type': 'application/json'
             }
         });
-        
-        request = request.clone({ headers: request.headers.set('Content-Type', 'application/json') });
-
         return next.handle(request);
 
     }

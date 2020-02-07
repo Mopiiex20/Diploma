@@ -37,19 +37,19 @@ export class PassedTestComponent implements OnInit {
           this.errorMessage = data.message;
         } else {
           this.id = data.testId
-          this.userService.get(data.userId).then(
-            snap => {
-              let passed = snap.data();
-              passed.passedTests.forEach(
-                test => {
-                  if (test.id == data.testId) {
-                    this.persantage = test.persantage
-                  }
-                }
-              )
+          // this.userService.get().then(
+          //   snap => {
+          //     let passed = snap.data();
+          //     passed.passedTests.forEach(
+          //       test => {
+          //         if (test.id == data.testId) {
+          //           this.persantage = test.persantage
+          //         }
+          //       }
+          //     )
 
-            }
-          )
+          //   }
+          // )
         }
       }
     )

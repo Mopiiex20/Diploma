@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
@@ -16,7 +16,7 @@ import { HighlightDirective } from './components/headder/headder.directive';
 import { CustomHttpInterceptorService } from './services/interceptor';
 import AuthService from './services/auth.service';
 import { ProfileComponent } from './components/profile/profile.component';
-import { LoginService } from './services/common.servise';
+import { CommonService } from './services/common.servise';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { JwtHelperService, JwtModule } from '@auth0/angular-jwt';
 import { UserService } from './services/users.service';
@@ -35,13 +35,16 @@ import { MathJaxModule } from 'ngx-mathjax';
 import { TestDetails } from './components/test-details/test-details.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SocketService } from './services/socket.service';
+
+
 
 export function tokenGetter() {
   return localStorage.getItem("token");
 }
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+export function startupServiceFactory(authService: AuthService): Function {
+  return () => authService.get()
 }
 
 @NgModule({
@@ -88,9 +91,16 @@ export function HttpLoaderFactory(http: HttpClient) {
   entryComponents: [PopUp],
   providers: [
     UserService,
-    JwtHelperService,
-    LoginService,
     AuthService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: startupServiceFactory,
+      deps: [AuthService],
+      multi: true
+    },
+    JwtHelperService,
+    CommonService,
+    SocketService,
     AuthGuardService,
     AdminGuardService,
     { provide: HTTP_INTERCEPTORS, useClass: CustomHttpInterceptorService, multi: true },
