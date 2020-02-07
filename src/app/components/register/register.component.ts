@@ -43,7 +43,6 @@ export class RegisterComponent implements OnInit {
     this.authService.register(newUser).then(
       (user) => {
         let userData = user.data()
-        debugger
         const loginData = {
           email: userData.email,
           password: userData.password

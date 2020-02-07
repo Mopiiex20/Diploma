@@ -6,6 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginService } from '../../services/common.servise';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Subscription } from 'rxjs';
+import * as firebase from 'firebase'
 
 @Component({
   selector: 'login',
@@ -16,7 +17,7 @@ import { Subscription } from 'rxjs';
 export class LoginComponent implements OnInit {
   token: string;
   subscription: Subscription;
-
+  provider = new firebase.auth.GoogleAuthProvider();
   constructor(
     private authService: AuthService,
     public jwtHelper: JwtHelperService,
@@ -29,6 +30,14 @@ export class LoginComponent implements OnInit {
     username: new FormControl(''),
     password: new FormControl(''),
   });
+
+  getAuthWithGoosle() {
+    firebase.auth().signInWithPopup(this.provider).then(
+      data => {
+        debugger
+      }
+    )
+  }
 
   async onSubmit() {
     const body = this.logInForm.value;
