@@ -42,12 +42,6 @@ export class RegisterComponent implements OnInit {
     }
     this.authService.register(newUser).then(
       (user) => {
-        let userData = user.data()
-        const loginData = {
-          email: userData.email,
-          password: userData.password
-        }
-        this.loginService.registerToLogin(loginData)
         this.router.navigateByUrl("/");
       })
       .catch(error => {

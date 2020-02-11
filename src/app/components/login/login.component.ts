@@ -33,8 +33,11 @@ export class LoginComponent implements OnInit {
 
   getAuthWithGoosle() {
     firebase.auth().signInWithPopup(this.provider).then(
-      data => {
-        debugger
+      async data => {
+        let res = await this.authService.loginWithGoogle(data);
+        if (res) {
+          this.router.navigateByUrl('home');
+        }
       }
     )
   }

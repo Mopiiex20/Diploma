@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserModel } from '../models';
-import * as Firebase from 'firebase'
+import * as Firebase from 'firebase';
+import { genPassword, comparePasswords } from '../shared/helpers/auth.helper';
 
 @Injectable()
 export default class AuthService {
@@ -52,12 +53,12 @@ export default class AuthService {
 
     auth(email: string, password: string): Promise<any> {
         return new Promise(
-            (resolve, reject) => {
+            async (resolve, reject) => {
                 Firebase.firestore().collection('users').where('username', '==', email).get().then(
                     user => {
                         user.forEach(
                             us => {
-                                if (us.data().password === password) {
+                                if (comparePasswords(us.data().password, password)) {
                                     this.user = us.data() as UserModel;
                                     localStorage.setItem('user', JSON.stringify(us.data()))
                                     resolve(true)
@@ -72,20 +73,75 @@ export default class AuthService {
         )
     }
 
+    loginWithGoogle(googleData: any): Promise<any> {
+        return new Promise(
+            (resolve, reject) => {
+                Firebase.firestore().collection('users').where('email', '==', googleData.user.email).get().then(
+                    snapshot => {
+                        if (snapshot.empty) {
+                            const googleUser = {
+                                socialProvided: true,
+                                email: googleData.user.email,
+                                firstname: googleData.user.displayName,
+                                avatar: googleData.user.photoURL
+                            }
+                            Firebase.firestore().collection('users').add(googleUser)
+                            localStorage.setItem('user', JSON.stringify(googleUser));
+                            resolve(googleUser)
+                        } else {
+                            snapshot.forEach(user => {
+                                localStorage.setItem('user', JSON.stringify(user.data()));
+                                resolve(user.data())
+                            })
+                        }
+                        // snapshot.forEach(
+                        //     us => {
+                        //         if (us.data().password) {
+                        //             this.user = us.data() as UserModel;
+                        //             localStorage.setItem('user', JSON.stringify(us.data()))
+                        //             resolve(true)
+                        //         } else {
+                        //             resolve(false)
+                        //         }
+                        //     }
+                        // )
+                    }
+                )
+            }
+        )
+    }
+
 
     register(newUser: UserModel): Promise<any> {
         return new Promise(
-            (resolve, reject) => {
-                let userToRegister = newUser;
-                Firebase.firestore().collection('users').add(newUser).then(
-                    user => {
-                        userToRegister.id = user.id;
-                        user.update(userToRegister);
-                        resolve(user.get());
+            async (resolve, reject) => {
+                Firebase.auth().createUserWithEmailAndPassword(newUser.email, newUser.password).then(
+                    res => {
+                        debugger
+                        let userToRegister = newUser;
+                        userToRegister.password = genPassword(userToRegister.password);
+                        Firebase.firestore().collection('users').add(userToRegister).then(
+                            user => {
+                                userToRegister.id = user.id;
+                                user.update(userToRegister);
+                                delete userToRegister.password;
+                                this.user = userToRegister;
+                                res.user.getIdToken().then(
+                                    token => {
+                                        localStorage.setItem('token', JSON.stringify(token));
+                                        resolve(userToRegister);
+                                    }
+                                )
+                            }
+                        ).catch(error => {
+                            reject(error.message)
+                        })
                     }
-                ).catch(error => {
-                    reject(error.message)
-                })
+                ).catch(
+                    error => {
+                        reject(error)
+                    }
+                )
             }
         )
     }
