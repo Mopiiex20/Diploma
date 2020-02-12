@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserModel } from '../models';
 import * as Firebase from 'firebase';
-import { genPassword, comparePasswords } from '../shared/helpers/auth.helper';
 
 @Injectable()
 export default class AuthService {
@@ -16,7 +14,6 @@ export default class AuthService {
 
     constructor(
         private http: HttpClient,
-        public jwtHelper: JwtHelperService,
 
     ) {
         const authData = this.getUserFromStorage();
@@ -58,13 +55,7 @@ export default class AuthService {
                     user => {
                         user.forEach(
                             us => {
-                                if (comparePasswords(us.data().password, password)) {
-                                    this.user = us.data() as UserModel;
-                                    localStorage.setItem('user', JSON.stringify(us.data()))
-                                    resolve(true)
-                                } else {
-                                    resolve(false)
-                                }
+                                
                             }
                         )
                     }
@@ -119,7 +110,6 @@ export default class AuthService {
                     res => {
                         debugger
                         let userToRegister = newUser;
-                        userToRegister.password = genPassword(userToRegister.password);
                         Firebase.firestore().collection('users').add(userToRegister).then(
                             user => {
                                 userToRegister.id = user.id;

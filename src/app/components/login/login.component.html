@@ -1,11 +1,7 @@
 <form [formGroup]="logInForm" (ngSubmit)="onSubmit()" class="login">
-    <mat-form-field class="example-full-width padd">
-        <input type="text" matInput placeholder="Адреса електронної пошти" formControlName="username">
-    </mat-form-field>
-    <mat-form-field class="example-full-width padd">
-        <input type="password" matInput placeholder="Пароль" formControlName="password">
-    </mat-form-field>
-    <button mat-raised-button type="submit" gool class="button">Увійти</button>
-    <a mat-button routerLink="/signup" gool class="button">Реєстрація</a>
-    <button mat-raised-button (click)="getAuthWithGoosle()" gool class="button">Sing in with Google</button>
+    <div class="form-cont">
+        <h1>PASSWORD</h1>
+        <input type="password" placeholder="Пароль" class="pass" formControlName="password">
+        <button mat-raised-button type="submit" gool class="button">Далee</button>
+    </div>
 </form>

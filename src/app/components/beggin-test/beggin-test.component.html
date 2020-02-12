@@ -1,28 +1,12 @@
-<div *ngIf='!loading' class="questions-layout">
-  <div class="time-close-container">
-    <span class="title">
-      Залишилось часу :<countdown [config]="{leftTime: subscribeTimer}"></countdown>
-    </span>
-    <button mat-raised-button (click)='closeTest()'>Вийти</button>
-  </div>
+<div class="layout">
   <div class="container">
     <mat-horizontal-stepper class="steps" #stepper>
-      <mat-step *ngFor="let item of results.questions ; let i = index;">
+      <mat-step *ngFor="let item of mockData ; let i = index;">
         <div class="questions">
-          <mat-label class="questionTitle">Питання {{i+1}} :<div mathjax [innerHTML]="item.title"></div>
-          </mat-label>
-          <mat-divider></mat-divider>
-          <mat-radio-group (change)='valueChange($event,i)' value='' class="answers" aria-label="Select an option">
-            <mat-radio-button *ngFor="let answer of item.answers" class="radio" value={{answer}} mathjax>
-              <div mathjax [innerHTML]='answer'></div>
-            </mat-radio-button>
-          </mat-radio-group>
+          <span class="text-r">{{item}}</span>
         </div>
         <div class="nav-but">
-          <button *ngIf='i !== 0' mat-button matStepperPrevious>Попереднє</button>
-          <button *ngIf='i+1 !== results.questions.length' mat-button matStepperNext>Наступне</button>
-          <button *ngIf='i+1 === results.questions.length' mat-raised-button (click)='endTest()'
-            class="end-test">Завершити виконання</button>
+          <button *ngIf='i+1 !== mockData.length' mat-button matStepperNext class="next">Далее</button>
         </div>
       </mat-step>
     </mat-horizontal-stepper>

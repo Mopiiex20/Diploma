@@ -11,27 +11,37 @@ $bg_col1: red;
   width: 10%;
 }
 
-.padd {
-  padding: 10px;
-  font-size: 12px;
-  width: 80%;
-  text-align: center;
+.pass{
+  width: 100%;
+  margin-top: 5vh;
 }
-.login {
+
+.form-cont {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5px 0px;
-  margin-top: 10px;
-  @media (min-width: 600px) {
-    width: 80%;
-    margin: 0px auto;
-  }
+  position: absolute;
+  top: 33vh;
+  left: 36vw;
+  height: 36vh;
 }
+
+.login {
+  background-image: url("../../../assets/222.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  height: 100vh;
+  overflow: hidden;
+}
+
 .button {
   width: 50%;
   font-size: 12px;
+  margin-top: 5vh;
 }
+
 .example-header-image {
   background-size: 100%;
 }
