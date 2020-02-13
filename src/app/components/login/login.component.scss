@@ -11,8 +11,7 @@ $bg_col1: red;
   width: 10%;
 }
 
-.pass{
-  width: 100%;
+.pass {
   margin-top: 5vh;
 }
 
@@ -20,10 +19,9 @@ $bg_col1: red;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
-  top: 33vh;
-  left: 36vw;
-  height: 36vh;
+  margin: 35vh auto;
+  height: 100vh;
+  width: 100%;
 }
 
 .login {
@@ -37,7 +35,6 @@ $bg_col1: red;
 }
 
 .button {
-  width: 50%;
   font-size: 12px;
   margin-top: 5vh;
 }
