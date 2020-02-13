@@ -25,6 +25,19 @@
   position: absolute !important;
   top: 30vh !important;
   left: 24vw !important;
+  width: 50vw;
+  font-size: 1.8em;
+  word-break: break-word;
+}
+
+.text-l {
+  font-style: italic;
+  position: absolute !important;
+  top: 40vh !important;
+  left: 40vw !important;
+  width: 50vw;
+  font-size: 3em;
+  word-break: break-word;
 }
 
 .time-close-container {

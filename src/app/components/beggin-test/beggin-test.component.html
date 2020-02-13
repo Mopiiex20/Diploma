@@ -1,12 +1,37 @@
 <div class="layout">
   <div class="container">
     <mat-horizontal-stepper class="steps" #stepper>
-      <mat-step *ngFor="let item of mockData ; let i = index;">
+      <mat-step>
         <div class="questions">
-          <span class="text-r">{{item}}</span>
+          <span class="text-r">
+            <span style="text-align: center;">
+              Привет мой любимый человечек!<br>
+            </span>
+            Словами не возможно описать как ты мне дорога.<br> Для меня ты самая красивая и умная девушка на целом свете!<br>
+            И пусть я не красноречив , но даже самых красивых слов буде не достаточно чтобы описать на сколько ты мне
+            дорога и как я тебя ценю в своей жизни !</span>
         </div>
         <div class="nav-but">
-          <button *ngIf='i+1 !== mockData.length' mat-button matStepperNext class="next">Далее</button>
+          <button mat-button matStepperNext class="next">Далее</button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <div class="questions">
+          <span class="text-r">Случаются невзгоды , но я знаю наперед что у нас в нашей маленькой , уютной семье всё
+            будет отлично.<br>
+            Все мои косяки приходят и уходят , а любовь наша становиться всё сильнее , ведь мы нашли друг в друге нечто
+            большее чем супружескую пару ,
+            а именно смысл всей жизни !</span>
+        </div>
+        <div class="nav-but">
+          <button mat-button matStepperNext class="next">Далее</button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <div class="questions">
+          <span class="text-l">{{laststep}}</span>
+        </div>
+        <div class="nav-but">
         </div>
       </mat-step>
     </mat-horizontal-stepper>

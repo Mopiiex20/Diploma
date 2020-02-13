@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/users.service';
 import AuthService from '../../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import constants from '../../../assets/shared/constants'
 
 @Component({
   selector: 'app-beggin-test',
@@ -13,7 +14,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class BegginTestComponent implements OnInit {
 
 
-  mockData = ['1', '2', '3']
+  mockData = [constants.first, constants.second];
+  laststep = 'ТВОЙ МУЖ';
 
   constructor(
     private _snackBar: MatSnackBar,
